@@ -145,13 +145,17 @@ public class Injector {
             }
             for(FieldNode field : mixin.fields)
             {
-                if(AnnotationUtil.hasAnnotation(field, Inject.class))
-                {
-                    InjectTransformer.patch(gamepackClass, field);
-                }
-                if(AnnotationUtil.hasAnnotation(field, Shadow.class))
-                {
-                    ShadowTransformer.patch(mixin, field);
+                try {
+                    if(AnnotationUtil.hasAnnotation(field, Inject.class))
+                    {
+                        InjectTransformer.patch(gamepackClass, field);
+                    }
+                    if(AnnotationUtil.hasAnnotation(field, Shadow.class))
+                    {
+                        ShadowTransformer.patch(mixin, field);
+                    }
+                } catch (Exception e) {
+                    System.err.println("[Injector] Failed to process field " + field.name + " in mixin " + mixin.name + ": " + e.getMessage());
                 }
             }
 
@@ -159,45 +163,49 @@ public class Injector {
 
             for(MethodNode method : mixin.methods)
             {
-                if(AnnotationUtil.hasAnnotation(method, Inject.class) || !AnnotationUtil.hasAnyAnnotation(method))
-                {
-                    InjectTransformer.patch(gamepackClass, mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, MethodHook.class))
-                {
-                    MethodHookTransformer.patch(mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, Replace.class))
-                {
-                    ReplaceTransformer.patch(mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, MethodOverride.class))
-                {
-                    MethodOverrideTransformer.patch(mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, Shadow.class))
-                {
-                    ShadowTransformer.patch(mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, Construct.class))
-                {
-                    ConstructTransformer.patch(mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, Disable.class))
-                {
-                    DisableTransformer.patch(mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, FieldHook.class))
-                {
-                    FieldHookTransformer.patch(mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, Insert.class))
-                {
-                    InsertTransformer.patch(mixin, method);
-                }
-                if(AnnotationUtil.hasAnnotation(method, ClassMod.class))
-                {
-                    ClassModTransformer.patch(mixin, method);
+                try {
+                    if(AnnotationUtil.hasAnnotation(method, Inject.class) || !AnnotationUtil.hasAnyAnnotation(method))
+                    {
+                        InjectTransformer.patch(gamepackClass, mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, MethodHook.class))
+                    {
+                        MethodHookTransformer.patch(mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, Replace.class))
+                    {
+                        ReplaceTransformer.patch(mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, MethodOverride.class))
+                    {
+                        MethodOverrideTransformer.patch(mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, Shadow.class))
+                    {
+                        ShadowTransformer.patch(mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, Construct.class))
+                    {
+                        ConstructTransformer.patch(mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, Disable.class))
+                    {
+                        DisableTransformer.patch(mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, FieldHook.class))
+                    {
+                        FieldHookTransformer.patch(mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, Insert.class))
+                    {
+                        InsertTransformer.patch(mixin, method);
+                    }
+                    if(AnnotationUtil.hasAnnotation(method, ClassMod.class))
+                    {
+                        ClassModTransformer.patch(mixin, method);
+                    }
+                } catch (Exception e) {
+                    System.err.println("[Injector] Failed to process method " + method.name + " in mixin " + mixin.name + ": " + e.getMessage());
                 }
             }
         }

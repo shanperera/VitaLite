@@ -25,6 +25,11 @@ public class ReplaceTransformer
 
         MethodNode toReplace = TransformerUtil.getTargetMethod(mixin, name);
 
+        if (toReplace == null) {
+            System.err.println("[ReplaceTransformer] Target method not found: " + name + " in mixin " + mixin.name);
+            return;
+        }
+
         Type hookType   = Type.getMethodType(method.desc);
         Type targetType = Type.getMethodType(toReplace.desc);
         Type[] hookParams   = hookType.getArgumentTypes();

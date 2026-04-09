@@ -39,6 +39,11 @@ public class ShadowTransformer
 
         MethodNode toShadow = TransformerUtil.getTargetMethod(mixin, name);
 
+        if (toShadow == null) {
+            System.err.println("[ShadowTransformer] Target method not found: " + name + " in mixin " + mixin.name);
+            return;
+        }
+
         Number multiplier = null;
         if(!gamepackName.contains("/"))
         {

@@ -23,6 +23,11 @@ public class MethodOverrideTransformer {
         String name = AnnotationUtil.getAnnotation(method, MethodOverride.class, "value");
         MethodNode toReplace = TransformerUtil.getTargetMethod(mixin, name);
 
+        if (toReplace == null) {
+            System.err.println("[MethodOverrideTransformer] Target method not found: " + name + " in mixin " + mixin.name);
+            return;
+        }
+
         toReplace.instructions.clear();
         toReplace.tryCatchBlocks.clear();
         toReplace.localVariables.clear();
