@@ -1,5 +1,6 @@
 package com.tonic.util.asm;
 
+import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
 public class GamepackClassWriter extends ClassWriter {
@@ -7,6 +8,11 @@ public class GamepackClassWriter extends ClassWriter {
 
     public GamepackClassWriter(int flags, ClassLoader loader) {
         super(flags);
+        this.loader = loader;
+    }
+
+    public GamepackClassWriter(ClassReader classReader, int flags, ClassLoader loader) {
+        super(classReader, flags);
         this.loader = loader;
     }
 

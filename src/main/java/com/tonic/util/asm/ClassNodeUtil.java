@@ -77,9 +77,28 @@ public class ClassNodeUtil {
     // ===== Byte[] to ClassNode Conversion =====
 
     public static byte[] toBytes(ClassNode classNode) {
+        return toBytes(classNode, null);
+    }
+
+    /**
+     * Converts ClassNode to bytecode. When originalBytes is provided, ASM copies
+     * constant pool entries and stack map frames from the original, only recomputing
+     * where bytecode actually changed. This is much more robust for classes loaded
+     * with SKIP_FRAMES.
+     */
+    public static byte[] toBytes(ClassNode classNode, byte[] originalBytes) {
         try
         {
-            ClassWriter classWriter = new GamepackClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS, Main.CTX_CLASSLOADER);
+            ClassWriter classWriter;
+            if (originalBytes != null)
+            {
+                ClassReader originalReader = new ClassReader(originalBytes);
+                classWriter = new GamepackClassWriter(originalReader, ClassWriter.COMPUTE_MAXS, Main.CTX_CLASSLOADER);
+            }
+            else
+            {
+                classWriter = new GamepackClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS, Main.CTX_CLASSLOADER);
+            }
             classNode.accept(classWriter);
             byte[] result = classWriter.toByteArray();
             classWriter = null;
@@ -87,19 +106,8 @@ public class ClassNodeUtil {
         }
         catch (Exception e)
         {
-            for(MethodNode mn : classNode.methods)
-            {
-                mn.visibleAnnotations = null;
-                mn.invisibleAnnotations = null;
-            }
-            ClassWriter classWriter = new GamepackClassWriter(0, Main.CTX_CLASSLOADER);
-            CheckClassAdapter checkAdapter = new CheckClassAdapter(classWriter);
-            classNode.accept(checkAdapter);
-            e.printStackTrace();
-            System.out.println("Class: " + classNode.name);
-            System.exit(1);
+            throw new RuntimeException("Failed to write class: " + classNode.name, e);
         }
-        return null;
     }
 
     public static String prettyPrint(MethodNode mn) {

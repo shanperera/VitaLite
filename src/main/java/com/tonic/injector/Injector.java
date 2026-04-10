@@ -69,17 +69,35 @@ public class Injector {
             PatchGenerator.storeOriginalGamepack(name, original);
 
             ClassNode classNode = gamepack.remove(name); // Remove from map immediately
-            FieldHookTransformer.instrument(classNode);
-            OSGlobalMixin.patch(classNode);
+            boolean isMixinTarget = mixinTargets.contains(name);
+            try {
+                FieldHookTransformer.instrument(classNode);
+                OSGlobalMixin.patch(classNode);
 
-            byte[] modified = ClassNodeUtil.toBytes(classNode);
-            Main.LIBS.getGamepack().classes.put(name, modified);
+                // Mixin targets were loaded with EXPAND_FRAMES → use COMPUTE_FRAMES
+                // Non-mixin targets were loaded with SKIP_FRAMES → pass original bytes
+                // so ASM copies frames from the original and only recomputes where changed
+                byte[] modified = isMixinTarget
+                    ? ClassNodeUtil.toBytes(classNode)
+                    : ClassNodeUtil.toBytes(classNode, original);
+                Main.LIBS.getGamepack().classes.put(name, modified);
 
-            // Capture diff if patch generation is enabled
-            PatchGenerator.captureGamepackDiff(name, modified);
+                // Capture diff if patch generation is enabled
+                PatchGenerator.captureGamepackDiff(name, modified);
 
-            StripAnnotationsTransformer.stripAnnotations(classNode);
-            Main.LIBS.getGamepackClean().classes.put(name, ClassNodeUtil.toBytes(classNode));
+                StripAnnotationsTransformer.stripAnnotations(classNode);
+                byte[] clean = isMixinTarget
+                    ? ClassNodeUtil.toBytes(classNode)
+                    : ClassNodeUtil.toBytes(classNode, original);
+                Main.LIBS.getGamepackClean().classes.put(name, clean);
+            } catch (Exception e) {
+                System.err.println("[Injector] Failed to process class " + name + ": " + e.getMessage());
+                // Keep original bytecode for failed classes
+                byte[] fallback = Main.LIBS.getGamepack().classes.get(name);
+                if (fallback != null) {
+                    Main.LIBS.getGamepackClean().classes.put(name, fallback);
+                }
+            }
 
             // Help GC by clearing reference immediately
             classNode = null;
@@ -135,13 +153,15 @@ public class Injector {
                 JClass clazz = MappingProvider.getClass(gamepackName);
                 if(clazz == null)
                 {
-                    throw new ClassNotFoundException("Could not find mapping for mixin target class: " + gamepackName);
+                    System.err.println("[Injector] Skipping mixin " + mixin.name + " — no mapping for target class: " + gamepackName);
+                    continue;
                 }
                 gamepackClass = gamepack.get(clazz.getObfuscatedName());
             }
             if(gamepackClass == null)
             {
-                throw new ClassNotFoundException("Could not find target class for mixin: " + gamepackName);
+                System.err.println("[Injector] Skipping mixin " + mixin.name + " — target class not found in gamepack: " + gamepackName);
+                continue;
             }
             for(FieldNode field : mixin.fields)
             {

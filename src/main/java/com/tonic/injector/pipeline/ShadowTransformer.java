@@ -169,9 +169,7 @@ public class ShadowTransformer
         }
         catch (Exception e)
         {
-            System.out.println("Error transforming shadow field: " + mixin.name + "." + field.name);
-            e.printStackTrace();
-            System.exit(0);
+            throw new RuntimeException("Error transforming shadow field: " + mixin.name + "." + field.name, e);
         }
     }
 
