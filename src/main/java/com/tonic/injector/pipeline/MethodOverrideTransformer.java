@@ -3,10 +3,8 @@ package com.tonic.injector.pipeline;
 import com.tonic.injector.annotations.MethodOverride;
 import com.tonic.injector.util.AnnotationUtil;
 import com.tonic.injector.util.TransformerUtil;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.LabelNode;
-import org.objectweb.asm.tree.MethodNode;
-import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +46,34 @@ public class MethodOverrideTransformer {
             }
         }
 
+        // Rewrite mixin class references to target class in copied instructions
+        ClassNode gamepackClass = TransformerUtil.getBaseClass(mixin);
+        if (gamepackClass != null) {
+            String mixinName = mixin.name;
+            String gamepackName = gamepackClass.name;
+            for (AbstractInsnNode insn : toReplace.instructions) {
+                if (insn instanceof FieldInsnNode) {
+                    FieldInsnNode fin = (FieldInsnNode) insn;
+                    if (fin.owner.equals(mixinName)) {
+                        fin.owner = gamepackName;
+                    }
+                } else if (insn instanceof MethodInsnNode) {
+                    MethodInsnNode min = (MethodInsnNode) insn;
+                    if (min.owner.equals(mixinName)) {
+                        min.owner = gamepackName;
+                    }
+                } else if (insn instanceof TypeInsnNode) {
+                    TypeInsnNode tin = (TypeInsnNode) insn;
+                    if (tin.desc.equals(mixinName)) {
+                        tin.desc = gamepackName;
+                    }
+                }
+            }
+        }
+
         toReplace.maxStack  = method.maxStack;
-        toReplace.maxLocals = method.maxLocals;
+        // Ensure maxLocals accounts for 'this' when target is an instance method
+        boolean isTargetStatic = (toReplace.access & Opcodes.ACC_STATIC) != 0;
+        toReplace.maxLocals = Math.max(method.maxLocals, isTargetStatic ? 0 : 1);
     }
 }

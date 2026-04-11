@@ -21566,7 +21566,8 @@
         "ownerObfuscatedName": "du",
         "descriptor": "(II)V",
         "garbageValue": 2144748645,
-        "isStatic": true
+        "isStatic": true,
+        "name": "setLoginIndex"
       },
       {
         "obfuscatedName": "bj",
