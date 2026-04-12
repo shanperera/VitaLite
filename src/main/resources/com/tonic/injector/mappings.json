@@ -52053,7 +52053,7 @@
       {
         "obfuscatedName": "<init>",
         "ownerObfuscatedName": "lq",
-        "descriptor": "()V",
+        "descriptor": "(Lar;)V",
         "isStatic": false,
         "name": "<init>",
         "owner": "MidiPcmStream"

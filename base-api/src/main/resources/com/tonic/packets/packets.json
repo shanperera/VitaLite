@@ -26,7 +26,7 @@
     "reads": [
       "readByte",
       "readByte",
-      "readShortAddLE",
+      "readShortAdd",
       "readShortLE"
     ],
     "packet": {
@@ -36,7 +36,7 @@
     "writes": [
       "writeByte",
       "writeByte",
-      "writeShortAddLE",
+      "writeShortAdd",
       "writeShortLE"
     ]
   },
@@ -126,7 +126,7 @@
     "name": "OP_WIDGET_TARGET_ON_PLAYER",
     "reads": [
       "readByteAdd",
-      "readShortAddLE",
+      "readShortAdd",
       "readShortLE",
       "readShortLE",
       "readIntME"
@@ -137,7 +137,7 @@
     },
     "writes": [
       "writeByteAdd",
-      "writeShortAddLE",
+      "writeShortAdd",
       "writeShortLE",
       "writeShortLE",
       "writeIntME"
@@ -149,14 +149,14 @@
     ],
     "name": "OP_EXAMINE_OBJECT",
     "reads": [
-      "readShortAdd"
+      "readShortAddLE"
     ],
     "packet": {
       "length": 2,
       "id": 70
     },
     "writes": [
-      "writeShortAdd"
+      "writeShortAddLE"
     ]
   },
   {
@@ -168,9 +168,9 @@
     ],
     "name": "OP_GROUND_ITEM_ACTION_0",
     "reads": [
+      "readShortAdd",
       "readShortAddLE",
-      "readShortAdd",
-      "readShortAdd",
+      "readShortAddLE",
       "readByteNeg"
     ],
     "packet": {
@@ -178,9 +178,9 @@
       "id": 113
     },
     "writes": [
+      "writeShortAdd",
       "writeShortAddLE",
-      "writeShortAdd",
-      "writeShortAdd",
+      "writeShortAddLE",
       "writeByteNeg"
     ]
   },
@@ -191,7 +191,7 @@
     ],
     "name": "OP_NPC_ACTION_0",
     "reads": [
-      "readShortAddLE",
+      "readShortAdd",
       "readByteAdd"
     ],
     "packet": {
@@ -199,7 +199,7 @@
       "id": 110
     },
     "writes": [
-      "writeShortAddLE",
+      "writeShortAdd",
       "writeByteAdd"
     ]
   },
@@ -210,7 +210,7 @@
     ],
     "name": "OP_PLAYER_ACTION_3",
     "reads": [
-      "readShortAdd",
+      "readShortAddLE",
       "readByte"
     ],
     "packet": {
@@ -218,7 +218,7 @@
       "id": 41
     },
     "writes": [
-      "writeShortAdd",
+      "writeShortAddLE",
       "writeByte"
     ]
   },
@@ -229,7 +229,7 @@
     ],
     "name": "OP_NPC_ACTION_4",
     "reads": [
-      "readShortAdd",
+      "readShortAddLE",
       "readByteSub"
     ],
     "packet": {
@@ -237,7 +237,7 @@
       "id": 92
     },
     "writes": [
-      "writeShortAdd",
+      "writeShortAddLE",
       "writeByteSub"
     ]
   },
@@ -285,7 +285,7 @@
     ],
     "name": "OP_GAME_OBJECT_ACTION_4",
     "reads": [
-      "readShortAddLE",
+      "readShortAdd",
       "readShortLE",
       "readByte",
       "readShort"
@@ -295,7 +295,7 @@
       "id": 89
     },
     "writes": [
-      "writeShortAddLE",
+      "writeShortAdd",
       "writeShortLE",
       "writeByte",
       "writeShort"
@@ -329,20 +329,20 @@
     ],
     "name": "OP_GAME_OBJECT_ACTION_1",
     "reads": [
-      "readShortAddLE",
+      "readShortAdd",
       "readByteAdd",
       "readShort",
-      "readShortAddLE"
+      "readShortAdd"
     ],
     "packet": {
       "length": 7,
       "id": 103
     },
     "writes": [
-      "writeShortAddLE",
+      "writeShortAdd",
       "writeByteAdd",
       "writeShort",
-      "writeShortAddLE"
+      "writeShortAdd"
     ]
   },
   {
@@ -358,12 +358,12 @@
     "name": "OP_WIDGET_TARGET_ON_GAME_OBJECT",
     "reads": [
       "readByte",
-      "readShortAddLE",
-      "readShortAddLE",
+      "readShortAdd",
+      "readShortAdd",
       "readShortLE",
-      "readShortAddLE",
+      "readShortAdd",
       "readInt",
-      "readShortAddLE"
+      "readShortAdd"
     ],
     "packet": {
       "length": 15,
@@ -371,12 +371,12 @@
     },
     "writes": [
       "writeByte",
-      "writeShortAddLE",
-      "writeShortAddLE",
+      "writeShortAdd",
+      "writeShortAdd",
       "writeShortLE",
-      "writeShortAddLE",
+      "writeShortAdd",
       "writeInt",
-      "writeShortAddLE"
+      "writeShortAdd"
     ]
   },
   {
@@ -438,20 +438,20 @@
     ],
     "name": "OP_GAME_OBJECT_ACTION_3",
     "reads": [
-      "readShortAddLE",
-      "readByteSub",
       "readShortAdd",
-      "readShortAddLE"
+      "readByteSub",
+      "readShortAddLE",
+      "readShortAdd"
     ],
     "packet": {
       "length": 7,
       "id": 32
     },
     "writes": [
-      "writeShortAddLE",
-      "writeByteSub",
       "writeShortAdd",
-      "writeShortAddLE"
+      "writeByteSub",
+      "writeShortAddLE",
+      "writeShortAdd"
     ]
   },
   {
@@ -483,7 +483,7 @@
     ],
     "name": "OP_PLAYER_ACTION_4",
     "reads": [
-      "readShortAdd",
+      "readShortAddLE",
       "readByteNeg"
     ],
     "packet": {
@@ -491,7 +491,7 @@
       "id": 38
     },
     "writes": [
-      "writeShortAdd",
+      "writeShortAddLE",
       "writeByteNeg"
     ]
   },
@@ -577,9 +577,9 @@
     "name": "OP_GROUND_ITEM_ACTION_2",
     "reads": [
       "readByte",
-      "readShortAdd",
-      "readShortAdd",
-      "readShortAddLE"
+      "readShortAddLE",
+      "readShortAddLE",
+      "readShortAdd"
     ],
     "packet": {
       "length": 7,
@@ -587,9 +587,9 @@
     },
     "writes": [
       "writeByte",
-      "writeShortAdd",
-      "writeShortAdd",
-      "writeShortAddLE"
+      "writeShortAddLE",
+      "writeShortAddLE",
+      "writeShortAdd"
     ]
   },
   {
@@ -602,9 +602,9 @@
     "name": "OP_GAME_OBJECT_ACTION_0",
     "reads": [
       "readByteNeg",
-      "readShortAdd",
       "readShortAddLE",
-      "readShortAddLE"
+      "readShortAdd",
+      "readShortAdd"
     ],
     "packet": {
       "length": 7,
@@ -612,9 +612,9 @@
     },
     "writes": [
       "writeByteNeg",
-      "writeShortAdd",
       "writeShortAddLE",
-      "writeShortAddLE"
+      "writeShortAdd",
+      "writeShortAdd"
     ]
   },
   {
@@ -692,12 +692,12 @@
     ],
     "name": "OP_WIDGET_TARGET_ON_GROUND_ITEM",
     "reads": [
-      "readShortAddLE",
-      "readShortAddLE",
-      "readShortAddLE",
+      "readShortAdd",
+      "readShortAdd",
+      "readShortAdd",
       "readIntIME",
       "readShort",
-      "readShortAddLE",
+      "readShortAdd",
       "readByte"
     ],
     "packet": {
@@ -705,12 +705,12 @@
       "id": 76
     },
     "writes": [
-      "writeShortAddLE",
-      "writeShortAddLE",
-      "writeShortAddLE",
+      "writeShortAdd",
+      "writeShortAdd",
+      "writeShortAdd",
       "writeIntIME",
       "writeShort",
-      "writeShortAddLE",
+      "writeShortAdd",
       "writeByte"
     ]
   },
@@ -765,7 +765,7 @@
     ],
     "name": "OP_PLAYER_ACTION_1",
     "reads": [
-      "readShortAdd",
+      "readShortAddLE",
       "readByte"
     ],
     "packet": {
@@ -773,7 +773,7 @@
       "id": 45
     },
     "writes": [
-      "writeShortAdd",
+      "writeShortAddLE",
       "writeByte"
     ]
   },
@@ -785,7 +785,7 @@
     "name": "OP_PLAYER_ACTION_6",
     "reads": [
       "readByte",
-      "readShortAdd"
+      "readShortAddLE"
     ],
     "packet": {
       "length": 3,
@@ -793,7 +793,7 @@
     },
     "writes": [
       "writeByte",
-      "writeShortAdd"
+      "writeShortAddLE"
     ]
   },
   {
@@ -807,7 +807,7 @@
     "reads": [
       "readShortLE",
       "readByteNeg",
-      "readShortAddLE",
+      "readShortAdd",
       "readShortLE"
     ],
     "packet": {
@@ -817,7 +817,7 @@
     "writes": [
       "writeShortLE",
       "writeByteNeg",
-      "writeShortAddLE",
+      "writeShortAdd",
       "writeShortLE"
     ]
   },
@@ -967,7 +967,7 @@
     "reads": [
       "readByteAdd",
       "readByteAdd",
-      "readShortAddLE"
+      "readShortAdd"
     ],
     "packet": {
       "length": 4,
@@ -976,7 +976,7 @@
     "writes": [
       "writeByteAdd",
       "writeByteAdd",
-      "writeShortAddLE"
+      "writeShortAdd"
     ]
   },
   {
@@ -989,7 +989,7 @@
     "reads": [
       "readByteNeg",
       "readByteAdd",
-      "readShortAddLE"
+      "readShortAdd"
     ],
     "packet": {
       "length": 4,
@@ -998,7 +998,7 @@
     "writes": [
       "writeByteNeg",
       "writeByteAdd",
-      "writeShortAddLE"
+      "writeShortAdd"
     ]
   },
   {
@@ -1032,7 +1032,7 @@
     "name": "OP_NPC_ACTION_4_SUBOP",
     "reads": [
       "readByteNeg",
-      "readShortAdd",
+      "readShortAddLE",
       "readByteSub"
     ],
     "packet": {
@@ -1041,7 +1041,7 @@
     },
     "writes": [
       "writeByteNeg",
-      "writeShortAdd",
+      "writeShortAddLE",
       "writeByteSub"
     ]
   },
@@ -1083,9 +1083,9 @@
     ],
     "name": "OP_GAME_OBJECT_ACTION_1_SUBOP",
     "reads": [
-      "readShortAdd",
       "readShortAddLE",
       "readShortAdd",
+      "readShortAddLE",
       "readByteAdd",
       "readByteNeg"
     ],
@@ -1094,9 +1094,9 @@
       "id": 94
     },
     "writes": [
-      "writeShortAdd",
       "writeShortAddLE",
       "writeShortAdd",
+      "writeShortAddLE",
       "writeByteAdd",
       "writeByteNeg"
     ]
@@ -1111,9 +1111,9 @@
     ],
     "name": "OP_GAME_OBJECT_ACTION_2_SUBOP",
     "reads": [
-      "readShortAddLE",
-      "readByte",
       "readShortAdd",
+      "readByte",
+      "readShortAddLE",
       "readShortLE",
       "readByteAdd"
     ],
@@ -1122,9 +1122,9 @@
       "id": 0
     },
     "writes": [
-      "writeShortAddLE",
-      "writeByte",
       "writeShortAdd",
+      "writeByte",
+      "writeShortAddLE",
       "writeShortLE",
       "writeByteAdd"
     ]
@@ -1140,10 +1140,10 @@
     "name": "OP_GAME_OBJECT_ACTION_3_SUBOP",
     "reads": [
       "readByteNeg",
-      "readShortAdd",
-      "readByteAdd",
       "readShortAddLE",
-      "readShortAdd"
+      "readByteAdd",
+      "readShortAdd",
+      "readShortAddLE"
     ],
     "packet": {
       "length": 8,
@@ -1151,10 +1151,10 @@
     },
     "writes": [
       "writeByteNeg",
-      "writeShortAdd",
-      "writeByteAdd",
       "writeShortAddLE",
-      "writeShortAdd"
+      "writeByteAdd",
+      "writeShortAdd",
+      "writeShortAddLE"
     ]
   },
   {
@@ -1168,8 +1168,8 @@
     "name": "OP_GAME_OBJECT_ACTION_4_SUBOP",
     "reads": [
       "readShortLE",
-      "readShortAddLE",
-      "readShortAddLE",
+      "readShortAdd",
+      "readShortAdd",
       "readByteSub",
       "readByte"
     ],
@@ -1179,8 +1179,8 @@
     },
     "writes": [
       "writeShortLE",
-      "writeShortAddLE",
-      "writeShortAddLE",
+      "writeShortAdd",
+      "writeShortAdd",
       "writeByteSub",
       "writeByte"
     ]
@@ -1197,8 +1197,8 @@
     "reads": [
       "readByteNeg",
       "readByte",
-      "readShortAddLE",
-      "readShortAddLE",
+      "readShortAdd",
+      "readShortAdd",
       "readShortLE"
     ],
     "packet": {
@@ -1208,8 +1208,8 @@
     "writes": [
       "writeByteNeg",
       "writeByte",
-      "writeShortAddLE",
-      "writeShortAddLE",
+      "writeShortAdd",
+      "writeShortAdd",
       "writeShortLE"
     ]
   },
