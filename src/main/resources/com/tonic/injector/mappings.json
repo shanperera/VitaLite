@@ -9354,14 +9354,13 @@
         "isStatic": true
       },
       {
-        "name": "logger",
+        "name": "",
         "obfuscatedName": "hn",
         "ownerObfuscatedName": "client",
         "descriptor": "I",
         "getter": -902503409,
         "setter": -194934033,
-        "isStatic": true,
-        "owner": "Client"
+        "isStatic": true
       },
       {
         "name": "",
@@ -10453,11 +10452,12 @@
         "isStatic": true
       },
       {
-        "name": "",
+        "name": "logger",
         "obfuscatedName": "rn",
         "ownerObfuscatedName": "client",
         "descriptor": "Lorg/slf4j/Logger;",
-        "isStatic": true
+        "isStatic": true,
+        "owner": "Client"
       },
       {
         "name": "",
@@ -14626,13 +14626,17 @@
       },
       {
         "obfuscatedName": "td",
+        "ownerObfuscatedName": "client",
         "descriptor": "()V",
+        "isStatic": true,
         "name": "callStackPacker1",
         "owner": "Client"
       },
       {
         "obfuscatedName": "tr",
+        "ownerObfuscatedName": "client",
         "descriptor": "()V",
+        "isStatic": true,
         "name": "callStackPacker2",
         "owner": "Client"
       }
@@ -52045,6 +52049,14 @@
         "ownerObfuscatedName": "lq",
         "descriptor": "(Llq;I)Z",
         "isStatic": true
+      },
+      {
+        "obfuscatedName": "<init>",
+        "ownerObfuscatedName": "lq",
+        "descriptor": "()V",
+        "isStatic": false,
+        "name": "<init>",
+        "owner": "MidiPcmStream"
       }
     ],
     "name": "MidiPcmStream"
@@ -73028,6 +73040,14 @@
         "ownerObfuscatedName": "sw",
         "descriptor": "(Lsw;S)V",
         "isStatic": true
+      },
+      {
+        "obfuscatedName": "ie",
+        "ownerObfuscatedName": "client",
+        "descriptor": "(I)V",
+        "isStatic": true,
+        "name": "getLoginError",
+        "owner": "GameEngine"
       }
     ],
     "name": "GameEngine"

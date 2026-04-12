@@ -91,10 +91,21 @@ public class TransformerUtil
             throw new RuntimeException("Could not find gamepack class for: " + jMethod.getOwnerObfuscatedName());
         }
 
-        return gamepackClass.methods.stream()
+        MethodNode exact = gamepackClass.methods.stream()
                 .filter(m -> m.name.equals(jMethod.getObfuscatedName()) && m.desc.equals(jMethod.getDescriptor()))
                 .findFirst()
                 .orElse(null);
+
+        // For constructors, fall back to name-only match if descriptor doesn't match
+        // (constructor descriptors vary between revisions and aren't always in mappings)
+        if (exact == null && jMethod.getObfuscatedName().equals("<init>")) {
+            exact = gamepackClass.methods.stream()
+                    .filter(m -> m.name.equals("<init>"))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        return exact;
     }
 
     public static MethodNode getTargetMethod(ClassNode mixin, String targetMethodName, String descriptor)

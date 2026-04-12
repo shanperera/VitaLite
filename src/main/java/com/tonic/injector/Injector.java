@@ -74,21 +74,36 @@ public class Injector {
                 FieldHookTransformer.instrument(classNode);
                 OSGlobalMixin.patch(classNode);
 
-                // Mixin targets were loaded with EXPAND_FRAMES → use COMPUTE_FRAMES
-                // Non-mixin targets were loaded with SKIP_FRAMES → pass original bytes
-                // so ASM copies frames from the original and only recomputes where changed
-                byte[] modified = isMixinTarget
-                    ? ClassNodeUtil.toBytes(classNode)
-                    : ClassNodeUtil.toBytes(classNode, original);
+                // Mixin targets need COMPUTE_FRAMES (loaded with EXPAND_FRAMES).
+                // Non-mixin targets: try COMPUTE_FRAMES first (handles modified bytecode
+                // where compact frame offsets are invalidated). If that fails (e.g. type
+                // hierarchy resolution), fall back to original bytes + COMPUTE_MAXS.
+                byte[] modified;
+                if (isMixinTarget) {
+                    modified = ClassNodeUtil.toBytes(classNode);
+                } else {
+                    try {
+                        modified = ClassNodeUtil.toBytes(classNode);
+                    } catch (Exception ex) {
+                        modified = ClassNodeUtil.toBytes(classNode, original);
+                    }
+                }
                 Main.LIBS.getGamepack().classes.put(name, modified);
 
                 // Capture diff if patch generation is enabled
                 PatchGenerator.captureGamepackDiff(name, modified);
 
                 StripAnnotationsTransformer.stripAnnotations(classNode);
-                byte[] clean = isMixinTarget
-                    ? ClassNodeUtil.toBytes(classNode)
-                    : ClassNodeUtil.toBytes(classNode, original);
+                byte[] clean;
+                if (isMixinTarget) {
+                    clean = ClassNodeUtil.toBytes(classNode);
+                } else {
+                    try {
+                        clean = ClassNodeUtil.toBytes(classNode);
+                    } catch (Exception ex) {
+                        clean = ClassNodeUtil.toBytes(classNode, original);
+                    }
+                }
                 Main.LIBS.getGamepackClean().classes.put(name, clean);
             } catch (Exception e) {
                 System.err.println("[Injector] Failed to process class " + name + ": " + e.getMessage());

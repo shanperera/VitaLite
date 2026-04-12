@@ -139,14 +139,18 @@ public class ClassNodeUtil {
      *
      * @param classBytes Raw class bytecode
      * @param expandFrames If true, expands frames (needed for mixin targets).
-     *                     If false, skips frames (saves 200-300MB for non-targets).
+     *                     If false, preserves original compact frames for non-targets.
      * @return Optimized ClassNode with interned strings and slimmed attributes
      */
     public static ClassNode toNode(byte[] classBytes, boolean expandFrames) {
         ClassReader classReader = new ClassReader(classBytes);
         ClassNode classNode = new ClassNode();
 
-        int parsingFlags = expandFrames ? ClassReader.EXPAND_FRAMES : ClassReader.SKIP_FRAMES;
+        // EXPAND_FRAMES: full frame expansion for mixin targets (needed for COMPUTE_FRAMES)
+        // 0 (no flags): preserves original compact frames for non-targets
+        // Note: SKIP_FRAMES would discard frames entirely, causing VerifyErrors
+        // when the class is written back even without modifications
+        int parsingFlags = expandFrames ? ClassReader.EXPAND_FRAMES : 0;
         classReader.accept(classNode, parsingFlags);
 
         // Apply memory optimizations
