@@ -1,13 +1,19 @@
 [
   {
-    "args": ["heading"],
+    "args": [
+      "heading"
+    ],
     "name": "OP_SET_HEADING",
-    "reads": ["readByteAdd"],
+    "reads": [
+      "readByteAdd"
+    ],
     "packet": {
       "length": 1,
-      "id": 81
+      "id": 98
     },
-    "writes": ["writeByteAdd"]
+    "writes": [
+      "writeByteAdd"
+    ]
   },
   {
     "args": [
@@ -25,7 +31,7 @@
     ],
     "packet": {
       "length": -1,
-      "id": 54
+      "id": 12
     },
     "writes": [
       "writeByte",
@@ -50,7 +56,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 77
+      "id": 14
     },
     "writes": [
       "writeByteNeg",
@@ -79,7 +85,7 @@
     ],
     "packet": {
       "length": 16,
-      "id": 60
+      "id": 83
     },
     "writes": [
       "writeIntIME",
@@ -102,7 +108,7 @@
     ],
     "packet": {
       "length": 6,
-      "id": 28
+      "id": 114
     },
     "writes": [
       "writeShortAddLE",
@@ -127,7 +133,7 @@
     ],
     "packet": {
       "length": 11,
-      "id": 79
+      "id": 29
     },
     "writes": [
       "writeByte",
@@ -138,14 +144,20 @@
     ]
   },
   {
-    "args": ["identifier"],
+    "args": [
+      "identifier"
+    ],
     "name": "OP_EXAMINE_OBJECT",
-    "reads": ["readShortAdd"],
+    "reads": [
+      "readShortAdd"
+    ],
     "packet": {
       "length": 2,
-      "id": 56
+      "id": 70
     },
-    "writes": ["writeShortAdd"]
+    "writes": [
+      "writeShortAdd"
+    ]
   },
   {
     "args": [
@@ -163,7 +175,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 45
+      "id": 113
     },
     "writes": [
       "writeShort",
@@ -184,7 +196,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 22
+      "id": 110
     },
     "writes": [
       "writeShortLE",
@@ -203,7 +215,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 27
+      "id": 41
     },
     "writes": [
       "writeByteNeg",
@@ -222,7 +234,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 73
+      "id": 92
     },
     "writes": [
       "writeShortLE",
@@ -230,14 +242,20 @@
     ]
   },
   {
-    "args": ["identifier"],
+    "args": [
+      "identifier"
+    ],
     "name": "OP_EXAMINE_NPC",
-    "reads": ["readShortLE"],
+    "reads": [
+      "readShortLE"
+    ],
     "packet": {
       "length": 2,
-      "id": 93
+      "id": 33
     },
-    "writes": ["writeShortLE"]
+    "writes": [
+      "writeShortLE"
+    ]
   },
   {
     "args": [
@@ -251,7 +269,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 75
+      "id": 54
     },
     "writes": [
       "writeShortLE",
@@ -274,7 +292,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 85
+      "id": 89
     },
     "writes": [
       "writeShortAdd",
@@ -295,7 +313,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 70
+      "id": 13
     },
     "writes": [
       "writeShort",
@@ -318,7 +336,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 25
+      "id": 103
     },
     "writes": [
       "writeShort",
@@ -349,7 +367,7 @@
     ],
     "packet": {
       "length": 15,
-      "id": 50
+      "id": 25
     },
     "writes": [
       "writeShortAdd",
@@ -373,7 +391,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 71
+      "id": 85
     },
     "writes": [
       "writeShortLE",
@@ -400,7 +418,7 @@
     ],
     "packet": {
       "length": 16,
-      "id": 55
+      "id": 48
     },
     "writes": [
       "writeShort",
@@ -427,7 +445,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 39
+      "id": 32
     },
     "writes": [
       "writeShort",
@@ -450,7 +468,7 @@
     ],
     "packet": {
       "length": 6,
-      "id": 90
+      "id": 27
     },
     "writes": [
       "writeShortLE",
@@ -470,7 +488,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 64
+      "id": 38
     },
     "writes": [
       "writeShort",
@@ -489,7 +507,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 36
+      "id": 74
     },
     "writes": [
       "writeByteSub",
@@ -512,7 +530,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 30
+      "id": 86
     },
     "writes": [
       "writeShortAddLE",
@@ -539,7 +557,7 @@
     ],
     "packet": {
       "length": 11,
-      "id": 53
+      "id": 116
     },
     "writes": [
       "writeShortAddLE",
@@ -565,7 +583,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 44
+      "id": 107
     },
     "writes": [
       "writeShortLE",
@@ -590,7 +608,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 23
+      "id": 3
     },
     "writes": [
       "writeByteAdd",
@@ -611,7 +629,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 67
+      "id": 88
     },
     "writes": [
       "writeShortLE",
@@ -634,7 +652,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 88
+      "id": 8
     },
     "writes": [
       "writeShortLE",
@@ -655,7 +673,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 11
+      "id": 35
     },
     "writes": [
       "writeShort",
@@ -684,7 +702,7 @@
     ],
     "packet": {
       "length": 15,
-      "id": 26
+      "id": 76
     },
     "writes": [
       "writeIntME",
@@ -712,7 +730,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 40
+      "id": 55
     },
     "writes": [
       "writeShortAdd",
@@ -733,7 +751,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 63
+      "id": 24
     },
     "writes": [
       "writeShortLE",
@@ -752,7 +770,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 66
+      "id": 45
     },
     "writes": [
       "writeShort",
@@ -771,7 +789,7 @@
     ],
     "packet": {
       "length": 3,
-      "id": 83
+      "id": 62
     },
     "writes": [
       "writeByteSub",
@@ -794,7 +812,7 @@
     ],
     "packet": {
       "length": 7,
-      "id": 65
+      "id": 115
     },
     "writes": [
       "writeShortAddLE",
@@ -819,7 +837,7 @@
     ],
     "packet": {
       "length": 9,
-      "id": 91
+      "id": 104
     },
     "writes": [
       "writeInt",
@@ -840,7 +858,7 @@
     ],
     "packet": {
       "length": -1,
-      "id": 37
+      "id": 93
     },
     "writes": [
       "writeByte",
@@ -875,7 +893,7 @@
     ],
     "packet": {
       "length": 10,
-      "id": 95
+      "id": 105
     },
     "writes": [
       "writeInt",
@@ -886,23 +904,35 @@
     ]
   },
   {
-    "args": ["count"],
+    "args": [
+      "count"
+    ],
     "name": "OP_RESUME_COUNTDIALOG",
-    "reads": ["readInt"],
+    "reads": [
+      "readInt"
+    ],
     "packet": {
       "length": 4,
       "id": 46
     },
-    "writes": ["writeInt"]
+    "writes": [
+      "writeInt"
+    ]
   },
   {
-    "args": ["id"],
+    "args": [
+      "id"
+    ],
     "name": "OP_RESUME_OBJDIALOG",
-    "reads": ["readShort"],
+    "reads": [
+      "readShort"
+    ],
     "packet": {
       "length": 2,
-      "id": 17
+      "id": 52
     },
-    "writes": ["writeShort"]
+    "writes": [
+      "writeShort"
+    ]
   }
 ]
