@@ -39,11 +39,6 @@ public class ShadowTransformer
 
         MethodNode toShadow = TransformerUtil.getTargetMethod(mixin, name);
 
-        if (toShadow == null) {
-            System.err.println("[ShadowTransformer] Target method not found: " + name + " in mixin " + mixin.name);
-            return;
-        }
-
         Number multiplier = null;
         if(!gamepackName.contains("/"))
         {
@@ -169,7 +164,9 @@ public class ShadowTransformer
         }
         catch (Exception e)
         {
-            throw new RuntimeException("Error transforming shadow field: " + mixin.name + "." + field.name, e);
+            System.out.println("Error transforming shadow field: " + mixin.name + "." + field.name);
+            e.printStackTrace();
+            System.exit(0);
         }
     }
 

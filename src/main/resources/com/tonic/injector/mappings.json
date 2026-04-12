@@ -41004,21 +41004,21 @@
       },
       {
         "name": "id",
-        "obfuscatedName": "em",
-        "ownerObfuscatedName": "iq",
-        "descriptor": "I",
-        "getter": 1467438961,
-        "setter": 1532791185,
-        "isStatic": false,
-        "owner": "ClientPacket"
-      },
-      {
-        "name": "length",
         "obfuscatedName": "et",
         "ownerObfuscatedName": "iq",
         "descriptor": "I",
         "getter": -892165111,
         "setter": -223335879,
+        "isStatic": false,
+        "owner": "ClientPacket"
+      },
+      {
+        "name": "length",
+        "obfuscatedName": "em",
+        "ownerObfuscatedName": "iq",
+        "descriptor": "I",
+        "getter": 1467438961,
+        "setter": 1532791185,
         "isStatic": false,
         "owner": "ClientPacket"
       }
@@ -81505,6 +81505,7 @@
     ]
   },
   {
+    "name": "Language",
     "obfuscatedName": "we",
     "fields": [
       {

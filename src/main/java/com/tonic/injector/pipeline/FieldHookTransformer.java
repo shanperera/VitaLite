@@ -44,38 +44,31 @@ public class FieldHookTransformer {
     /**
      * Instruments all methods in class with registered field hooks.
      * @param classNode class to instrument
-     * @return true if any methods were modified
      */
-    public static boolean instrument(ClassNode classNode)
+    public static void instrument(ClassNode classNode)
     {
-        boolean modified = false;
         for(FieldHookDef hook : fieldHooks)
         {
             for(MethodNode methodNode : classNode.methods)
             {
-                if(instrumentMethod(methodNode, hook))
-                    modified = true;
+                instrument(methodNode, hook);
             }
         }
-        return modified;
     }
 
     /**
      * Instruments single method with field access hooks.
      * @param method method to instrument
      * @param hook field hook definition
-     * @return true if the method was modified
      */
-    private static boolean instrumentMethod(MethodNode method, FieldHookDef hook) {
+    private static void instrument(MethodNode method, FieldHookDef hook) {
         String desc = hook.getTarget().getDescriptor();
         boolean isStatic = hook.isStatic();
 
         if((method.name + method.desc).equals(hook.getHookMethod() + hook.getHookDesc()))
-            return false;
+            return;
 
         List<AbstractInsnNode> fieldSets = getInjectionPoints(method, hook, isStatic);
-        if(fieldSets.isEmpty())
-            return false;
         for (AbstractInsnNode fieldInsn : fieldSets) {
             InsnList wrapper = new InsnList();
             LabelNode skipLabel = new LabelNode();
@@ -160,7 +153,6 @@ public class FieldHookTransformer {
                 method.instructions.insert(fieldInsn, continueLabel);
             }
         }
-        return true;
     }
 
     /**

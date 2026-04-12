@@ -82,13 +82,6 @@ public abstract class TPacketWriterMixin implements TPacketWriter
 
         byte[] bytes = buffer.getArray();
         int payloadSize = (len > 0) ? len : (offset - 1);
-        int maxPayload = bytes.length - 1;
-        if (payloadSize > maxPayload) {
-            payloadSize = maxPayload;
-        }
-        if (payloadSize <= 0) {
-            return;
-        }
         byte[] payload = new byte[payloadSize];
         System.arraycopy(bytes, 1, payload, 0, payloadSize);
 

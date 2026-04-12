@@ -77,28 +77,9 @@ public class ClassNodeUtil {
     // ===== Byte[] to ClassNode Conversion =====
 
     public static byte[] toBytes(ClassNode classNode) {
-        return toBytes(classNode, null);
-    }
-
-    /**
-     * Converts ClassNode to bytecode. When originalBytes is provided, ASM copies
-     * constant pool entries and stack map frames from the original, only recomputing
-     * where bytecode actually changed. This is much more robust for classes loaded
-     * with SKIP_FRAMES.
-     */
-    public static byte[] toBytes(ClassNode classNode, byte[] originalBytes) {
         try
         {
-            ClassWriter classWriter;
-            if (originalBytes != null)
-            {
-                ClassReader originalReader = new ClassReader(originalBytes);
-                classWriter = new GamepackClassWriter(originalReader, ClassWriter.COMPUTE_MAXS, Main.CTX_CLASSLOADER);
-            }
-            else
-            {
-                classWriter = new GamepackClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS, Main.CTX_CLASSLOADER);
-            }
+            ClassWriter classWriter = new GamepackClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS, Main.CTX_CLASSLOADER);
             classNode.accept(classWriter);
             byte[] result = classWriter.toByteArray();
             classWriter = null;
@@ -106,8 +87,19 @@ public class ClassNodeUtil {
         }
         catch (Exception e)
         {
-            throw new RuntimeException("Failed to write class: " + classNode.name, e);
+            for(MethodNode mn : classNode.methods)
+            {
+                mn.visibleAnnotations = null;
+                mn.invisibleAnnotations = null;
+            }
+            ClassWriter classWriter = new GamepackClassWriter(0, Main.CTX_CLASSLOADER);
+            CheckClassAdapter checkAdapter = new CheckClassAdapter(classWriter);
+            classNode.accept(checkAdapter);
+            e.printStackTrace();
+            System.out.println("Class: " + classNode.name);
+            System.exit(1);
         }
+        return null;
     }
 
     public static String prettyPrint(MethodNode mn) {
@@ -139,18 +131,14 @@ public class ClassNodeUtil {
      *
      * @param classBytes Raw class bytecode
      * @param expandFrames If true, expands frames (needed for mixin targets).
-     *                     If false, preserves original compact frames for non-targets.
+     *                     If false, skips frames (saves 200-300MB for non-targets).
      * @return Optimized ClassNode with interned strings and slimmed attributes
      */
     public static ClassNode toNode(byte[] classBytes, boolean expandFrames) {
         ClassReader classReader = new ClassReader(classBytes);
         ClassNode classNode = new ClassNode();
 
-        // EXPAND_FRAMES: full frame expansion for mixin targets (needed for COMPUTE_FRAMES)
-        // 0 (no flags): preserves original compact frames for non-targets
-        // Note: SKIP_FRAMES would discard frames entirely, causing VerifyErrors
-        // when the class is written back even without modifications
-        int parsingFlags = expandFrames ? ClassReader.EXPAND_FRAMES : 0;
+        int parsingFlags = expandFrames ? ClassReader.EXPAND_FRAMES : ClassReader.SKIP_FRAMES;
         classReader.accept(classNode, parsingFlags);
 
         // Apply memory optimizations

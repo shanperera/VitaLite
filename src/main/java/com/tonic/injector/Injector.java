@@ -69,73 +69,17 @@ public class Injector {
             PatchGenerator.storeOriginalGamepack(name, original);
 
             ClassNode classNode = gamepack.remove(name); // Remove from map immediately
-            boolean isMixinTarget = mixinTargets.contains(name);
-            try {
-                FieldHookTransformer.instrument(classNode);
-                OSGlobalMixin.patch(classNode);
+            FieldHookTransformer.instrument(classNode);
+            OSGlobalMixin.patch(classNode);
 
-                // Mixin targets need COMPUTE_FRAMES (loaded with EXPAND_FRAMES).
-                // Non-mixin targets: try COMPUTE_FRAMES first, fall back to
-                // original bytes + COMPUTE_MAXS, then retry with EXPAND_FRAMES.
-                byte[] modified;
-                if (isMixinTarget) {
-                    modified = ClassNodeUtil.toBytes(classNode);
-                } else {
-                    try {
-                        modified = ClassNodeUtil.toBytes(classNode);
-                    } catch (Exception ex) {
-                        try {
-                            modified = ClassNodeUtil.toBytes(classNode, original);
-                        } catch (Exception ex2) {
-                            // Both failed — re-parse with full frame expansion and retry
-                            System.out.println("[Injector] Retrying " + name + " with EXPAND_FRAMES (cause: " + ex.getCause() + ")");
-                            classNode = ClassNodeUtil.toNode(original, true);
-                            FieldHookTransformer.instrument(classNode);
-                            OSGlobalMixin.patch(classNode);
-                            modified = ClassNodeUtil.toBytes(classNode);
-                        }
-                    }
-                }
-                Main.LIBS.getGamepack().classes.put(name, modified);
+            byte[] modified = ClassNodeUtil.toBytes(classNode);
+            Main.LIBS.getGamepack().classes.put(name, modified);
 
-                // Capture diff if patch generation is enabled
-                PatchGenerator.captureGamepackDiff(name, modified);
+            // Capture diff if patch generation is enabled
+            PatchGenerator.captureGamepackDiff(name, modified);
 
-                StripAnnotationsTransformer.stripAnnotations(classNode);
-                byte[] clean;
-                if (isMixinTarget) {
-                    clean = ClassNodeUtil.toBytes(classNode);
-                } else {
-                    try {
-                        clean = ClassNodeUtil.toBytes(classNode);
-                    } catch (Exception ex) {
-                        try {
-                            clean = ClassNodeUtil.toBytes(classNode, original);
-                        } catch (Exception ex2) {
-                            System.out.println("[Injector] Retrying clean write for " + name + " with EXPAND_FRAMES");
-                            classNode = ClassNodeUtil.toNode(original, true);
-                            FieldHookTransformer.instrument(classNode);
-                            OSGlobalMixin.patch(classNode);
-                            StripAnnotationsTransformer.stripAnnotations(classNode);
-                            clean = ClassNodeUtil.toBytes(classNode);
-                        }
-                    }
-                }
-                Main.LIBS.getGamepackClean().classes.put(name, clean);
-            } catch (Exception e) {
-                System.err.println("[Injector] Failed to process class " + name + ": " + e.getMessage());
-                // Print the full cause chain so the actual ASM error is visible
-                Throwable cause = e.getCause();
-                while (cause != null) {
-                    System.err.println("[Injector]   Caused by: " + cause.getClass().getSimpleName() + ": " + cause.getMessage());
-                    cause = cause.getCause();
-                }
-                // Keep original bytecode for failed classes
-                byte[] fallback = Main.LIBS.getGamepack().classes.get(name);
-                if (fallback != null) {
-                    Main.LIBS.getGamepackClean().classes.put(name, fallback);
-                }
-            }
+            StripAnnotationsTransformer.stripAnnotations(classNode);
+            Main.LIBS.getGamepackClean().classes.put(name, ClassNodeUtil.toBytes(classNode));
 
             // Help GC by clearing reference immediately
             classNode = null;
@@ -191,29 +135,23 @@ public class Injector {
                 JClass clazz = MappingProvider.getClass(gamepackName);
                 if(clazz == null)
                 {
-                    System.err.println("[Injector] Skipping mixin " + mixin.name + " — no mapping for target class: " + gamepackName);
-                    continue;
+                    throw new ClassNotFoundException("Could not find mapping for mixin target class: " + gamepackName);
                 }
                 gamepackClass = gamepack.get(clazz.getObfuscatedName());
             }
             if(gamepackClass == null)
             {
-                System.err.println("[Injector] Skipping mixin " + mixin.name + " — target class not found in gamepack: " + gamepackName);
-                continue;
+                throw new ClassNotFoundException("Could not find target class for mixin: " + gamepackName);
             }
             for(FieldNode field : mixin.fields)
             {
-                try {
-                    if(AnnotationUtil.hasAnnotation(field, Inject.class))
-                    {
-                        InjectTransformer.patch(gamepackClass, field);
-                    }
-                    if(AnnotationUtil.hasAnnotation(field, Shadow.class))
-                    {
-                        ShadowTransformer.patch(mixin, field);
-                    }
-                } catch (Exception e) {
-                    System.err.println("[Injector] Failed to process field " + field.name + " in mixin " + mixin.name + ": " + e.getMessage());
+                if(AnnotationUtil.hasAnnotation(field, Inject.class))
+                {
+                    InjectTransformer.patch(gamepackClass, field);
+                }
+                if(AnnotationUtil.hasAnnotation(field, Shadow.class))
+                {
+                    ShadowTransformer.patch(mixin, field);
                 }
             }
 
@@ -221,49 +159,45 @@ public class Injector {
 
             for(MethodNode method : mixin.methods)
             {
-                try {
-                    if(AnnotationUtil.hasAnnotation(method, Inject.class) || !AnnotationUtil.hasAnyAnnotation(method))
-                    {
-                        InjectTransformer.patch(gamepackClass, mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, MethodHook.class))
-                    {
-                        MethodHookTransformer.patch(mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, Replace.class))
-                    {
-                        ReplaceTransformer.patch(mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, MethodOverride.class))
-                    {
-                        MethodOverrideTransformer.patch(mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, Shadow.class))
-                    {
-                        ShadowTransformer.patch(mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, Construct.class))
-                    {
-                        ConstructTransformer.patch(mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, Disable.class))
-                    {
-                        DisableTransformer.patch(mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, FieldHook.class))
-                    {
-                        FieldHookTransformer.patch(mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, Insert.class))
-                    {
-                        InsertTransformer.patch(mixin, method);
-                    }
-                    if(AnnotationUtil.hasAnnotation(method, ClassMod.class))
-                    {
-                        ClassModTransformer.patch(mixin, method);
-                    }
-                } catch (Exception e) {
-                    System.err.println("[Injector] Failed to process method " + method.name + " in mixin " + mixin.name + ": " + e.getMessage());
+                if(AnnotationUtil.hasAnnotation(method, Inject.class) || !AnnotationUtil.hasAnyAnnotation(method))
+                {
+                    InjectTransformer.patch(gamepackClass, mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, MethodHook.class))
+                {
+                    MethodHookTransformer.patch(mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, Replace.class))
+                {
+                    ReplaceTransformer.patch(mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, MethodOverride.class))
+                {
+                    MethodOverrideTransformer.patch(mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, Shadow.class))
+                {
+                    ShadowTransformer.patch(mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, Construct.class))
+                {
+                    ConstructTransformer.patch(mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, Disable.class))
+                {
+                    DisableTransformer.patch(mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, FieldHook.class))
+                {
+                    FieldHookTransformer.patch(mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, Insert.class))
+                {
+                    InsertTransformer.patch(mixin, method);
+                }
+                if(AnnotationUtil.hasAnnotation(method, ClassMod.class))
+                {
+                    ClassModTransformer.patch(mixin, method);
                 }
             }
         }
