@@ -12,26 +12,26 @@
   {
     "args": [
       "5",
-      "worldY",
+      "ctrl",
       "worldX",
-      "ctrl"
+      "worldY"
     ],
     "name": "OP_WALK",
     "reads": [
       "readByte",
-      "readShortAdd",
-      "readShort",
-      "readByteSub"
+      "readByte",
+      "readShortAddLE",
+      "readShortLE"
     ],
     "packet": {
       "length": -1,
-      "id": 12
+      "id": 6
     },
     "writes": [
       "writeByte",
-      "writeShortAdd",
-      "writeShort",
-      "writeByteSub"
+      "writeByte",
+      "writeShortAddLE",
+      "writeShortLE"
     ]
   },
   {
