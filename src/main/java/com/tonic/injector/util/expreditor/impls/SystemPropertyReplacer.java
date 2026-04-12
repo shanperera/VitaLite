@@ -11,15 +11,20 @@ public class SystemPropertyReplacer extends ExprEditor {
     
     @Override
     public void edit(MethodCall call) {
-        if (call.getMethodOwner().equals("java/lang/System") && 
-            call.getMethodName().equals("getProperty") && 
+        if (call.getMethodOwner().equals("java/lang/System") &&
+            call.getMethodName().equals("getProperty") &&
             call.getMethodDesc().equals("(Ljava/lang/String;)Ljava/lang/String;")) {
             String propertyKey = getPropertyKey(call);
-            
+
             if ("java.vendor".equals(propertyKey)) {
                 replaceWithHardcodedValue(call, "Eclipse Adoptium");
             } else if ("java.version".equals(propertyKey)) {
-                replaceWithHardcodedValue(call, JdkVersionUtil.calculateJreVersion());
+                String jreVersion = JdkVersionUtil.calculateJreVersion();
+                if (jreVersion == null) {
+                    // Fallback to actual JVM version if remote fetch fails (e.g. HTTP 429)
+                    jreVersion = System.getProperty("java.version");
+                }
+                replaceWithHardcodedValue(call, jreVersion);
             }
         }
     }

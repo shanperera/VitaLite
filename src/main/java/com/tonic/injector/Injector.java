@@ -75,9 +75,8 @@ public class Injector {
                 OSGlobalMixin.patch(classNode);
 
                 // Mixin targets need COMPUTE_FRAMES (loaded with EXPAND_FRAMES).
-                // Non-mixin targets: try COMPUTE_FRAMES first (handles modified bytecode
-                // where compact frame offsets are invalidated). If that fails (e.g. type
-                // hierarchy resolution), fall back to original bytes + COMPUTE_MAXS.
+                // Non-mixin targets: try COMPUTE_FRAMES first, fall back to
+                // original bytes + COMPUTE_MAXS, then retry with EXPAND_FRAMES.
                 byte[] modified;
                 if (isMixinTarget) {
                     modified = ClassNodeUtil.toBytes(classNode);
@@ -85,7 +84,16 @@ public class Injector {
                     try {
                         modified = ClassNodeUtil.toBytes(classNode);
                     } catch (Exception ex) {
-                        modified = ClassNodeUtil.toBytes(classNode, original);
+                        try {
+                            modified = ClassNodeUtil.toBytes(classNode, original);
+                        } catch (Exception ex2) {
+                            // Both failed — re-parse with full frame expansion and retry
+                            System.out.println("[Injector] Retrying " + name + " with EXPAND_FRAMES (cause: " + ex.getCause() + ")");
+                            classNode = ClassNodeUtil.toNode(original, true);
+                            FieldHookTransformer.instrument(classNode);
+                            OSGlobalMixin.patch(classNode);
+                            modified = ClassNodeUtil.toBytes(classNode);
+                        }
                     }
                 }
                 Main.LIBS.getGamepack().classes.put(name, modified);
@@ -101,12 +109,27 @@ public class Injector {
                     try {
                         clean = ClassNodeUtil.toBytes(classNode);
                     } catch (Exception ex) {
-                        clean = ClassNodeUtil.toBytes(classNode, original);
+                        try {
+                            clean = ClassNodeUtil.toBytes(classNode, original);
+                        } catch (Exception ex2) {
+                            System.out.println("[Injector] Retrying clean write for " + name + " with EXPAND_FRAMES");
+                            classNode = ClassNodeUtil.toNode(original, true);
+                            FieldHookTransformer.instrument(classNode);
+                            OSGlobalMixin.patch(classNode);
+                            StripAnnotationsTransformer.stripAnnotations(classNode);
+                            clean = ClassNodeUtil.toBytes(classNode);
+                        }
                     }
                 }
                 Main.LIBS.getGamepackClean().classes.put(name, clean);
             } catch (Exception e) {
                 System.err.println("[Injector] Failed to process class " + name + ": " + e.getMessage());
+                // Print the full cause chain so the actual ASM error is visible
+                Throwable cause = e.getCause();
+                while (cause != null) {
+                    System.err.println("[Injector]   Caused by: " + cause.getClass().getSimpleName() + ": " + cause.getMessage());
+                    cause = cause.getCause();
+                }
                 // Keep original bytecode for failed classes
                 byte[] fallback = Main.LIBS.getGamepack().classes.get(name);
                 if (fallback != null) {
