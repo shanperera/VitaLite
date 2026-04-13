@@ -14498,7 +14498,8 @@
         "obfuscatedName": "wa",
         "ownerObfuscatedName": "client",
         "descriptor": "()Ljava/lang/String;",
-        "isStatic": true
+        "isStatic": true,
+        "name": "callStackCombiner"
       },
       {
         "obfuscatedName": "wj",
@@ -72697,7 +72698,8 @@
         "obfuscatedName": "dl",
         "ownerObfuscatedName": "sw",
         "descriptor": "()V",
-        "isStatic": false
+        "isStatic": false,
+        "name": "graphicsTick"
       },
       {
         "obfuscatedName": "ea",
@@ -77902,7 +77904,7 @@
         "isStatic": false
       },
       {
-        "name": "",
+        "name": "clientName",
         "obfuscatedName": "cf",
         "ownerObfuscatedName": "us",
         "descriptor": "Ljava/lang/String;",

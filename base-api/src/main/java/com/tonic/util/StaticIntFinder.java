@@ -32,6 +32,10 @@ public class StaticIntFinder {
 
         while (!stack.isEmpty()) {
             final Class<?> cls = stack.pop();
+            Class<?> superCls = cls.getSuperclass();
+            if (superCls != null && superCls != Object.class) {
+                stack.push(superCls);
+            }
             Class<?>[] inners;
             try {
                 inners = cls.getDeclaredClasses();
@@ -90,6 +94,9 @@ public class StaticIntFinder {
     }
 
     private static String qualify(Class<?> root, Class<?> cls, String fieldName) {
+        if (cls == root || cls.isAssignableFrom(root)) {
+            return fieldName;
+        }
         final String n = cls.getName();
         final String r = root.getName();
         String simple = n.indexOf('$') >= 0 ? n.replace('$', '.') : n;
