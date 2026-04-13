@@ -1,99 +1,142 @@
 [
   {
     "args": [
-      "heading"
+      "subOp",
+      "ctrl",
+      "worldY",
+      "identifier",
+      "worldX"
     ],
-    "name": "OP_EVENT_APPLET_FOCUS",
+    "name": "OP_GROUND_ITEM_ACTION_0_SUBOP",
     "reads": [
-      "readByte"
+      "readByteAdd",
+      "readByteAdd",
+      "readShortLE",
+      "readShortLE",
+      "readShortLE"
     ],
     "packet": {
-      "length": 1,
-      "id": 98
+      "length": 8,
+      "id": 36
     },
     "writes": [
-      "writeByte"
+      "writeByteAdd",
+      "writeByteAdd",
+      "writeShortLE",
+      "writeShortLE",
+      "writeShortLE"
     ]
   },
   {
     "args": [
-      "5",
       "ctrl",
+      "identifier",
       "worldX",
+      "subOp",
       "worldY"
     ],
-    "name": "OP_WALK",
+    "name": "OP_GROUND_ITEM_ACTION_1_SUBOP",
     "reads": [
       "readByte",
+      "readShort",
+      "readShortLE",
+      "readByteSub",
+      "readShort"
+    ],
+    "packet": {
+      "length": 8,
+      "id": 60
+    },
+    "writes": [
+      "writeByte",
+      "writeShort",
+      "writeShortLE",
+      "writeByteSub",
+      "writeShort"
+    ]
+  },
+  {
+    "args": [
+      "subOp",
+      "ctrl",
+      "worldX",
+      "worldY",
+      "identifier"
+    ],
+    "name": "OP_GROUND_ITEM_ACTION_2_SUBOP",
+    "reads": [
+      "readByteNeg",
       "readByte",
+      "readShortAdd",
       "readShortAdd",
       "readShortLE"
     ],
     "packet": {
-      "length": -1,
-      "id": 6
+      "length": 8,
+      "id": 106
     },
     "writes": [
+      "writeByteNeg",
       "writeByte",
-      "writeByte",
+      "writeShortAdd",
       "writeShortAdd",
       "writeShortLE"
     ]
   },
   {
     "args": [
-      "y",
-      "mouseInfo",
-      "x",
-      "0"
+      "subOp",
+      "worldX",
+      "worldY",
+      "ctrl",
+      "identifier"
     ],
-    "name": "OP_MOUSE_CLICK",
+    "name": "OP_GROUND_ITEM_ACTION_3_SUBOP",
     "reads": [
+      "readByteSub",
       "readShortLE",
-      "readByte",
-      "readShortLE",
+      "readShort",
+      "readByteNeg",
       "readShort"
     ],
     "packet": {
-      "length": 7,
-      "id": 14
+      "length": 8,
+      "id": 101
     },
     "writes": [
+      "writeByteSub",
       "writeShortLE",
-      "writeByte",
-      "writeShortLE",
+      "writeShort",
+      "writeByteNeg",
       "writeShort"
     ]
   },
   {
     "args": [
-      "itemId",
-      "itemId2",
-      "widgetId",
-      "widgetId2",
-      "slot",
-      "slot2"
+      "ctrl",
+      "worldY",
+      "worldX",
+      "identifier",
+      "subOp"
     ],
-    "name": "OP_WIDGET_DRAG",
+    "name": "OP_GROUND_ITEM_ACTION_4_SUBOP",
     "reads": [
-      "readShort",
-      "readShort",
-      "readIntIME",
-      "readIntIME",
+      "readByteNeg",
       "readShortLE",
-      "readShort"
+      "readShortLE",
+      "readShort",
+      "readByteAdd"
     ],
     "packet": {
-      "length": 16,
-      "id": 83
+      "length": 8,
+      "id": 43
     },
     "writes": [
-      "writeShort",
-      "writeShort",
-      "writeIntIME",
-      "writeIntIME",
+      "writeByteNeg",
       "writeShortLE",
-      "writeShort"
+      "writeShortLE",
+      "writeShort",
+      "writeByteAdd"
     ]
   },
   {
@@ -104,7 +147,7 @@
     "name": "OP_RESUME_PAUSEBUTTON",
     "reads": [
       "readShort",
-      "readIntIME"
+      "readIntME"
     ],
     "packet": {
       "length": 6,
@@ -112,95 +155,42 @@
     },
     "writes": [
       "writeShort",
-      "writeIntIME"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "slot",
-      "itemId",
-      "identifier",
-      "selectedWidgetId"
-    ],
-    "name": "OP_WIDGET_TARGET_ON_PLAYER",
-    "reads": [
-      "readByteAdd",
-      "readShortAdd",
-      "readShortLE",
-      "readShortLE",
-      "readIntME"
-    ],
-    "packet": {
-      "length": 11,
-      "id": 29
-    },
-    "writes": [
-      "writeByteAdd",
-      "writeShortAdd",
-      "writeShortLE",
-      "writeShortLE",
       "writeIntME"
     ]
   },
   {
     "args": [
+      "heading"
+    ],
+    "name": "OP_SET_HEADING",
+    "reads": [
+      "readByteSub"
+    ],
+    "packet": {
+      "length": 1,
+      "id": 65
+    },
+    "writes": [
+      "writeByteSub"
+    ]
+  },
+  {
+    "args": [
+      "ctrl",
       "identifier"
     ],
-    "name": "OP_EXAMINE_OBJECT",
+    "name": "OP_PLAYER_ACTION_0",
     "reads": [
-      "readShortAddLE"
-    ],
-    "packet": {
-      "length": 2,
-      "id": 70
-    },
-    "writes": [
-      "writeShortAddLE"
-    ]
-  },
-  {
-    "args": [
-      "worldX",
-      "worldY",
-      "identifier",
-      "ctrl"
-    ],
-    "name": "OP_GROUND_ITEM_ACTION_0",
-    "reads": [
-      "readShortAdd",
-      "readShortAddLE",
-      "readShortAddLE",
-      "readByteNeg"
-    ],
-    "packet": {
-      "length": 7,
-      "id": 113
-    },
-    "writes": [
-      "writeShortAdd",
-      "writeShortAddLE",
-      "writeShortAddLE",
-      "writeByteNeg"
-    ]
-  },
-  {
-    "args": [
-      "identifier",
-      "ctrl"
-    ],
-    "name": "OP_NPC_ACTION_0",
-    "reads": [
-      "readShortAdd",
-      "readByteAdd"
+      "readByteAdd",
+      "readShortLE"
     ],
     "packet": {
       "length": 3,
-      "id": 110
+      "id": 85
     },
     "writes": [
-      "writeShortAdd",
-      "writeByteAdd"
+      "writeByteAdd",
+      "writeShortLE"
     ]
   },
   {
@@ -227,97 +217,37 @@
       "identifier",
       "ctrl"
     ],
-    "name": "OP_NPC_ACTION_4",
+    "name": "OP_PLAYER_ACTION_5",
     "reads": [
-      "readShortAddLE",
-      "readByteSub"
-    ],
-    "packet": {
-      "length": 3,
-      "id": 92
-    },
-    "writes": [
-      "writeShortAddLE",
-      "writeByteSub"
-    ]
-  },
-  {
-    "args": [
-      "identifier"
-    ],
-    "name": "OP_EXAMINE_NPC",
-    "reads": [
-      "readShortLE"
-    ],
-    "packet": {
-      "length": 2,
-      "id": 33
-    },
-    "writes": [
-      "writeShortLE"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "identifier"
-    ],
-    "name": "OP_PLAYER_ACTION_2",
-    "reads": [
-      "readByteSub",
-      "readShortLE"
-    ],
-    "packet": {
-      "length": 3,
-      "id": 54
-    },
-    "writes": [
-      "writeByteSub",
-      "writeShortLE"
-    ]
-  },
-  {
-    "args": [
-      "identifier",
-      "worldY",
-      "ctrl",
-      "worldX"
-    ],
-    "name": "OP_GAME_OBJECT_ACTION_4",
-    "reads": [
-      "readShortAdd",
       "readShortLE",
-      "readByte",
-      "readShort"
+      "readByteAdd"
     ],
     "packet": {
-      "length": 7,
-      "id": 89
+      "length": 3,
+      "id": 74
     },
     "writes": [
-      "writeShortAdd",
       "writeShortLE",
-      "writeByte",
-      "writeShort"
+      "writeByteAdd"
     ]
   },
   {
     "args": [
-      "identifier",
-      "ctrl"
+      "ctrl",
+      "identifier"
     ],
-    "name": "OP_NPC_ACTION_1",
+    "name": "OP_PLAYER_ACTION_6",
     "reads": [
-      "readShort",
-      "readByte"
+      "readByte",
+      "readShortAddLE"
     ],
     "packet": {
       "length": 3,
-      "id": 13
+      "id": 62
     },
     "writes": [
-      "writeShort",
-      "writeByte"
+      "writeByte",
+      "writeShortAddLE"
     ]
   },
   {
@@ -327,7 +257,7 @@
       "worldX",
       "identifier"
     ],
-    "name": "OP_GAME_OBJECT_ACTION_1",
+    "name": "OP_GAME_OBJECT_ACTION_0",
     "reads": [
       "readShortAdd",
       "readByteAdd",
@@ -350,168 +280,24 @@
       "ctrl",
       "worldX",
       "worldY",
-      "identifier",
-      "slot",
-      "selectedWidgetId",
-      "itemId"
-    ],
-    "name": "OP_WIDGET_TARGET_ON_GAME_OBJECT",
-    "reads": [
-      "readByte",
-      "readShortAdd",
-      "readShortAdd",
-      "readShortLE",
-      "readShortAdd",
-      "readInt",
-      "readShortAdd"
-    ],
-    "packet": {
-      "length": 15,
-      "id": 25
-    },
-    "writes": [
-      "writeByte",
-      "writeShortAdd",
-      "writeShortAdd",
-      "writeShortLE",
-      "writeShortAdd",
-      "writeInt",
-      "writeShortAdd"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
       "identifier"
     ],
-    "name": "OP_PLAYER_ACTION_0",
+    "name": "OP_GAME_OBJECT_ACTION_1",
     "reads": [
-      "readByteAdd",
-      "readShortLE"
-    ],
-    "packet": {
-      "length": 3,
-      "id": 85
-    },
-    "writes": [
-      "writeByteAdd",
-      "writeShortLE"
-    ]
-  },
-  {
-    "args": [
-      "param0",
-      "itemId",
-      "selectedWidgetId",
-      "identifier2",
-      "slot",
-      "targetWidgetID"
-    ],
-    "name": "OP_WIDGET_TARGET_ON_WIDGET",
-    "reads": [
-      "readShort",
-      "readShort",
-      "readInt",
-      "readShort",
-      "readShort",
-      "readIntLE"
-    ],
-    "packet": {
-      "length": 16,
-      "id": 48
-    },
-    "writes": [
-      "writeShort",
-      "writeShort",
-      "writeInt",
-      "writeShort",
-      "writeShort",
-      "writeIntLE"
-    ]
-  },
-  {
-    "args": [
-      "identifier",
-      "ctrl",
-      "worldY",
-      "worldX"
-    ],
-    "name": "OP_GAME_OBJECT_ACTION_3",
-    "reads": [
-      "readShortAdd",
-      "readByteSub",
+      "readByteNeg",
       "readShortAddLE",
+      "readShortAdd",
       "readShortAdd"
     ],
     "packet": {
       "length": 7,
-      "id": 32
+      "id": 3
     },
     "writes": [
+      "writeByteNeg",
+      "writeShortAddLE",
       "writeShortAdd",
-      "writeByteSub",
-      "writeShortAddLE",
       "writeShortAdd"
-    ]
-  },
-  {
-    "args": [
-      "worldY",
-      "identifier",
-      "worldX"
-    ],
-    "name": "OP_EXAMINE_ITEM_GROUND",
-    "reads": [
-      "readShort",
-      "readShort",
-      "readShortLE"
-    ],
-    "packet": {
-      "length": 6,
-      "id": 27
-    },
-    "writes": [
-      "writeShort",
-      "writeShort",
-      "writeShortLE"
-    ]
-  },
-  {
-    "args": [
-      "identifier",
-      "ctrl"
-    ],
-    "name": "OP_PLAYER_ACTION_4",
-    "reads": [
-      "readShortAddLE",
-      "readByteNeg"
-    ],
-    "packet": {
-      "length": 3,
-      "id": 38
-    },
-    "writes": [
-      "writeShortAddLE",
-      "writeByteNeg"
-    ]
-  },
-  {
-    "args": [
-      "identifier",
-      "ctrl"
-    ],
-    "name": "OP_PLAYER_ACTION_5",
-    "reads": [
-      "readShortLE",
-      "readByteAdd"
-    ],
-    "packet": {
-      "length": 3,
-      "id": 74
-    },
-    "writes": [
-      "writeShortLE",
-      "writeByteAdd"
     ]
   },
   {
@@ -542,123 +328,79 @@
   {
     "args": [
       "identifier",
+      "worldY",
       "ctrl",
-      "slot",
+      "worldX"
+    ],
+    "name": "OP_GAME_OBJECT_ACTION_3",
+    "reads": [
+      "readShortAdd",
+      "readShortLE",
+      "readByte",
+      "readShort"
+    ],
+    "packet": {
+      "length": 7,
+      "id": 89
+    },
+    "writes": [
+      "writeShortAdd",
+      "writeShortLE",
+      "writeByte",
+      "writeShort"
+    ]
+  },
+  {
+    "args": [
+      "identifier",
+      "ctrl",
+      "worldY",
+      "worldX"
+    ],
+    "name": "OP_GAME_OBJECT_ACTION_4",
+    "reads": [
+      "readShortAdd",
+      "readByteSub",
+      "readShortAddLE",
+      "readShortAdd"
+    ],
+    "packet": {
+      "length": 7,
+      "id": 32
+    },
+    "writes": [
+      "writeShortAdd",
+      "writeByteSub",
+      "writeShortAddLE",
+      "writeShortAdd"
+    ]
+  },
+  {
+    "args": [
+      "identifier",
+      "itemId",
       "selectedWidgetId",
-      "itemId"
+      "slot",
+      "ctrl"
     ],
     "name": "OP_WIDGET_TARGET_ON_NPC",
     "reads": [
-      "readShort",
-      "readByte",
-      "readShortLE",
+      "readShortAdd",
+      "readShortAdd",
       "readIntIME",
-      "readShortLE"
+      "readShortLE",
+      "readByteAdd"
     ],
     "packet": {
       "length": 11,
-      "id": 116
+      "id": 59
     },
     "writes": [
-      "writeShort",
-      "writeByte",
-      "writeShortLE",
-      "writeIntIME",
-      "writeShortLE"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "worldY",
-      "identifier",
-      "worldX"
-    ],
-    "name": "OP_GROUND_ITEM_ACTION_2",
-    "reads": [
-      "readByte",
-      "readShortAddLE",
-      "readShortAddLE",
-      "readShortAdd"
-    ],
-    "packet": {
-      "length": 7,
-      "id": 107
-    },
-    "writes": [
-      "writeByte",
-      "writeShortAddLE",
-      "writeShortAddLE",
-      "writeShortAdd"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "worldX",
-      "worldY",
-      "identifier"
-    ],
-    "name": "OP_GAME_OBJECT_ACTION_0",
-    "reads": [
-      "readByteNeg",
-      "readShortAddLE",
-      "readShortAdd",
-      "readShortAdd"
-    ],
-    "packet": {
-      "length": 7,
-      "id": 3
-    },
-    "writes": [
-      "writeByteNeg",
-      "writeShortAddLE",
       "writeShortAdd",
-      "writeShortAdd"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "identifier"
-    ],
-    "name": "OP_NPC_ACTION_3",
-    "reads": [
-      "readByteNeg",
-      "readShort"
-    ],
-    "packet": {
-      "length": 3,
-      "id": 88
-    },
-    "writes": [
-      "writeByteNeg",
-      "writeShort"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "worldY",
-      "worldX",
-      "identifier"
-    ],
-    "name": "OP_GROUND_ITEM_ACTION_3",
-    "reads": [
-      "readByteAdd",
-      "readShortLE",
-      "readShort",
-      "readShort"
-    ],
-    "packet": {
-      "length": 7,
-      "id": 8
-    },
-    "writes": [
-      "writeByteAdd",
+      "writeShortAdd",
+      "writeIntIME",
       "writeShortLE",
-      "writeShort",
-      "writeShort"
+      "writeByteAdd"
     ]
   },
   {
@@ -682,12 +424,109 @@
   },
   {
     "args": [
-      "worldY",
-      "worldX",
       "identifier",
-      "selectedWidgetId",
+      "ctrl"
+    ],
+    "name": "OP_PLAYER_ACTION_4",
+    "reads": [
+      "readShortAddLE",
+      "readByteNeg"
+    ],
+    "packet": {
+      "length": 3,
+      "id": 38
+    },
+    "writes": [
+      "writeShortAddLE",
+      "writeByteNeg"
+    ]
+  },
+  {
+    "args": [
+      "slot",
+      "identifier2",
+      "targetWidgetID",
+      "param0",
+      "itemId",
+      "selectedWidgetId"
+    ],
+    "name": "OP_WIDGET_TARGET_ON_WIDGET",
+    "reads": [
+      "readShort",
+      "readShort",
+      "readInt",
+      "readShort",
+      "readShort",
+      "readIntLE"
+    ],
+    "packet": {
+      "length": 16,
+      "id": 48
+    },
+    "writes": [
+      "writeShort",
+      "writeShort",
+      "writeInt",
+      "writeShort",
+      "writeShort",
+      "writeIntLE"
+    ]
+  },
+  {
+    "args": [
       "itemId",
       "slot",
+      "ctrl",
+      "selectedWidgetId",
+      "identifier"
+    ],
+    "name": "OP_WIDGET_TARGET_ON_PLAYER",
+    "reads": [
+      "readShortAddLE",
+      "readShortLE",
+      "readByteNeg",
+      "readIntME",
+      "readShort"
+    ],
+    "packet": {
+      "length": 11,
+      "id": 72
+    },
+    "writes": [
+      "writeShortAddLE",
+      "writeShortLE",
+      "writeByteNeg",
+      "writeIntME",
+      "writeShort"
+    ]
+  },
+  {
+    "args": [
+      "ctrl",
+      "identifier"
+    ],
+    "name": "OP_PLAYER_ACTION_2",
+    "reads": [
+      "readByteSub",
+      "readShortLE"
+    ],
+    "packet": {
+      "length": 3,
+      "id": 54
+    },
+    "writes": [
+      "writeByteSub",
+      "writeShortLE"
+    ]
+  },
+  {
+    "args": [
+      "slot",
+      "identifier",
+      "worldY",
+      "selectedWidgetId",
+      "worldX",
+      "itemId",
       "ctrl"
     ],
     "name": "OP_WIDGET_TARGET_ON_GROUND_ITEM",
@@ -695,10 +534,10 @@
       "readShortAdd",
       "readShortAdd",
       "readShortAdd",
-      "readIntIME",
+      "readIntME",
       "readShort",
       "readShortAdd",
-      "readByte"
+      "readByteAdd"
     ],
     "packet": {
       "length": 15,
@@ -708,92 +547,51 @@
       "writeShortAdd",
       "writeShortAdd",
       "writeShortAdd",
-      "writeIntIME",
+      "writeIntME",
       "writeShort",
       "writeShortAdd",
-      "writeByte"
+      "writeByteAdd"
     ]
   },
   {
     "args": [
+      "worldY",
       "identifier",
-      "worldX",
-      "ctrl",
-      "worldY"
+      "worldX"
     ],
-    "name": "OP_GROUND_ITEM_ACTION_4",
+    "name": "OP_EXAMINE_ITEM_GROUND",
     "reads": [
-      "readShortLE",
-      "readShortLE",
-      "readByteSub",
-      "readShort"
-    ],
-    "packet": {
-      "length": 7,
-      "id": 55
-    },
-    "writes": [
-      "writeShortLE",
-      "writeShortLE",
-      "writeByteSub",
-      "writeShort"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "identifier"
-    ],
-    "name": "OP_NPC_ACTION_2",
-    "reads": [
-      "readByte",
+      "readShort",
+      "readShort",
       "readShortLE"
     ],
     "packet": {
-      "length": 3,
-      "id": 24
+      "length": 6,
+      "id": 27
     },
     "writes": [
-      "writeByte",
+      "writeShort",
+      "writeShort",
       "writeShortLE"
     ]
   },
   {
     "args": [
-      "identifier",
-      "ctrl"
-    ],
-    "name": "OP_PLAYER_ACTION_1",
-    "reads": [
-      "readShortAddLE",
-      "readByte"
-    ],
-    "packet": {
-      "length": 3,
-      "id": 45
-    },
-    "writes": [
-      "writeShortAddLE",
-      "writeByte"
-    ]
-  },
-  {
-    "args": [
       "ctrl",
       "identifier"
     ],
-    "name": "OP_PLAYER_ACTION_6",
+    "name": "OP_PLAYER_ACTION_1",
     "reads": [
-      "readByte",
-      "readShortAddLE"
+      "readByteSub",
+      "readShortAdd"
     ],
     "packet": {
       "length": 3,
-      "id": 62
+      "id": 49
     },
     "writes": [
-      "writeByte",
-      "writeShortAddLE"
+      "writeByteSub",
+      "writeShortAdd"
     ]
   },
   {
@@ -801,135 +599,62 @@
       "identifier",
       "ctrl",
       "worldY",
+      "slot",
+      "itemId",
+      "selectedWidgetId",
       "worldX"
     ],
-    "name": "OP_GROUND_ITEM_ACTION_1",
+    "name": "OP_WIDGET_TARGET_ON_GAME_OBJECT",
     "reads": [
-      "readShortLE",
-      "readByteNeg",
+      "readShortAddLE",
+      "readByteSub",
       "readShortAdd",
+      "readShortAdd",
+      "readShortAdd",
+      "readIntLE",
+      "readShort"
+    ],
+    "packet": {
+      "length": 15,
+      "id": 99
+    },
+    "writes": [
+      "writeShortAddLE",
+      "writeByteSub",
+      "writeShortAdd",
+      "writeShortAdd",
+      "writeShortAdd",
+      "writeIntLE",
+      "writeShort"
+    ]
+  },
+  {
+    "args": [
+      "identifier"
+    ],
+    "name": "OP_EXAMINE_NPC",
+    "reads": [
       "readShortLE"
     ],
     "packet": {
-      "length": 7,
-      "id": 115
+      "length": 2,
+      "id": 33
     },
     "writes": [
-      "writeShortLE",
-      "writeByteNeg",
-      "writeShortAdd",
       "writeShortLE"
     ]
   },
   {
     "args": [
-      "widgetId",
-      "childId",
-      "itemId",
-      "type"
+      "identifier"
     ],
-    "name": "OP_WIDGET_ACTION",
-    "reads": [
-      "readInt",
-      "readShort",
-      "readShort",
-      "readByte"
-    ],
-    "packet": {
-      "length": 9,
-      "id": 104
-    },
-    "writes": [
-      "writeInt",
-      "writeShort",
-      "writeShort",
-      "writeByte"
-    ]
-  },
-  {
-    "args": [
-      "length",
-      "var7"
-    ],
-    "name": "OP_RESUME_STRINGDIALOG",
-    "reads": [
-      "readByte",
-      "readStringCp1252NullTerminated"
-    ],
-    "packet": {
-      "length": -1,
-      "id": 93
-    },
-    "writes": [
-      "writeByte",
-      "writeStringCp1252NullTerminated"
-    ]
-  },
-  {
-    "args": [],
-    "name": "OP_MOUSE_MOVEMENT",
-    "reads": [],
-    "packet": {
-      "length": -1,
-      "id": 53
-    },
-    "writes": []
-  },
-  {
-    "args": [
-      "widgetId",
-      "childId",
-      "itemId",
-      "type",
-      "subOp"
-    ],
-    "name": "OP_WIDGET_ACTION_SUBOP",
-    "reads": [
-      "readInt",
-      "readShort",
-      "readShort",
-      "readByte",
-      "readByte"
-    ],
-    "packet": {
-      "length": 10,
-      "id": 105
-    },
-    "writes": [
-      "writeInt",
-      "writeShort",
-      "writeShort",
-      "writeByte",
-      "writeByte"
-    ]
-  },
-  {
-    "args": [
-      "count"
-    ],
-    "name": "OP_RESUME_COUNTDIALOG",
-    "reads": [
-      "readInt"
-    ],
-    "packet": {
-      "length": 4,
-      "id": 46
-    },
-    "writes": [
-      "writeInt"
-    ]
-  },
-  {
-    "args": [
-      "id"
-    ],
-    "name": "OP_RESUME_OBJDIALOG",
+    "name": "OP_EXAMINE_OBJECT",
     "reads": [
       "readShort"
     ],
     "packet": {
       "length": 2,
-      "id": 52
+      "id": 70
     },
     "writes": [
       "writeShort"
@@ -1043,6 +768,276 @@
       "writeByteNeg",
       "writeShortAddLE",
       "writeByteSub"
+    ]
+  },
+  {
+    "args": [
+      "worldX",
+      "worldY",
+      "identifier",
+      "ctrl"
+    ],
+    "name": "OP_GROUND_ITEM_ACTION_0",
+    "reads": [
+      "readShortAdd",
+      "readShortAddLE",
+      "readShortAddLE",
+      "readByteNeg"
+    ],
+    "packet": {
+      "length": 7,
+      "id": 113
+    },
+    "writes": [
+      "writeShortAdd",
+      "writeShortAddLE",
+      "writeShortAddLE",
+      "writeByteNeg"
+    ]
+  },
+  {
+    "args": [
+      "identifier",
+      "ctrl",
+      "worldY",
+      "worldX"
+    ],
+    "name": "OP_GROUND_ITEM_ACTION_1",
+    "reads": [
+      "readShortLE",
+      "readByteNeg",
+      "readShortAdd",
+      "readShortLE"
+    ],
+    "packet": {
+      "length": 7,
+      "id": 115
+    },
+    "writes": [
+      "writeShortLE",
+      "writeByteNeg",
+      "writeShortAdd",
+      "writeShortLE"
+    ]
+  },
+  {
+    "args": [
+      "ctrl",
+      "worldY",
+      "identifier",
+      "worldX"
+    ],
+    "name": "OP_GROUND_ITEM_ACTION_2",
+    "reads": [
+      "readByte",
+      "readShortAddLE",
+      "readShortAddLE",
+      "readShortAdd"
+    ],
+    "packet": {
+      "length": 7,
+      "id": 107
+    },
+    "writes": [
+      "writeByte",
+      "writeShortAddLE",
+      "writeShortAddLE",
+      "writeShortAdd"
+    ]
+  },
+  {
+    "args": [
+      "ctrl",
+      "worldY",
+      "worldX",
+      "identifier"
+    ],
+    "name": "OP_GROUND_ITEM_ACTION_3",
+    "reads": [
+      "readByteAdd",
+      "readShortLE",
+      "readShort",
+      "readShort"
+    ],
+    "packet": {
+      "length": 7,
+      "id": 8
+    },
+    "writes": [
+      "writeByteAdd",
+      "writeShortLE",
+      "writeShort",
+      "writeShort"
+    ]
+  },
+  {
+    "args": [
+      "identifier",
+      "worldX",
+      "ctrl",
+      "worldY"
+    ],
+    "name": "OP_GROUND_ITEM_ACTION_4",
+    "reads": [
+      "readShortLE",
+      "readShortLE",
+      "readByteSub",
+      "readShort"
+    ],
+    "packet": {
+      "length": 7,
+      "id": 55
+    },
+    "writes": [
+      "writeShortLE",
+      "writeShortLE",
+      "writeByteSub",
+      "writeShort"
+    ]
+  },
+  {
+    "args": [
+      "identifier",
+      "ctrl"
+    ],
+    "name": "OP_NPC_ACTION_0",
+    "reads": [
+      "readShortAdd",
+      "readByteAdd"
+    ],
+    "packet": {
+      "length": 3,
+      "id": 110
+    },
+    "writes": [
+      "writeShortAdd",
+      "writeByteAdd"
+    ]
+  },
+  {
+    "args": [
+      "identifier",
+      "ctrl"
+    ],
+    "name": "OP_NPC_ACTION_1",
+    "reads": [
+      "readShort",
+      "readByte"
+    ],
+    "packet": {
+      "length": 3,
+      "id": 13
+    },
+    "writes": [
+      "writeShort",
+      "writeByte"
+    ]
+  },
+  {
+    "args": [
+      "ctrl",
+      "identifier"
+    ],
+    "name": "OP_NPC_ACTION_2",
+    "reads": [
+      "readByte",
+      "readShortLE"
+    ],
+    "packet": {
+      "length": 3,
+      "id": 24
+    },
+    "writes": [
+      "writeByte",
+      "writeShortLE"
+    ]
+  },
+  {
+    "args": [
+      "ctrl",
+      "identifier"
+    ],
+    "name": "OP_NPC_ACTION_3",
+    "reads": [
+      "readByteNeg",
+      "readShort"
+    ],
+    "packet": {
+      "length": 3,
+      "id": 88
+    },
+    "writes": [
+      "writeByteNeg",
+      "writeShort"
+    ]
+  },
+  {
+    "args": [
+      "identifier",
+      "ctrl"
+    ],
+    "name": "OP_NPC_ACTION_4",
+    "reads": [
+      "readShortAddLE",
+      "readByteSub"
+    ],
+    "packet": {
+      "length": 3,
+      "id": 92
+    },
+    "writes": [
+      "writeShortAddLE",
+      "writeByteSub"
+    ]
+  },
+  {
+    "args": [
+      "5",
+      "ctrl",
+      "worldX",
+      "worldY"
+    ],
+    "name": "OP_WALK",
+    "reads": [
+      "readByte",
+      "readByte",
+      "readShortAdd",
+      "readShortLE"
+    ],
+    "packet": {
+      "length": -1,
+      "id": 6
+    },
+    "writes": [
+      "writeByte",
+      "writeByte",
+      "writeShortAdd",
+      "writeShortLE"
+    ]
+  },
+  {
+    "args": [
+      "y",
+      "0",
+      "mouseInfo",
+      "x"
+    ],
+    "name": "OP_MOUSE_CLICK",
+    "reads": [
+      "readShortLE",
+      "readByteNeg",
+      "readShortLE",
+      "readShort"
+    ],
+    "packet": {
+      "length": 7,
+      "id": 14
+    },
+    "writes": [
+      "writeShortLE",
+      "writeByteNeg",
+      "writeShortLE",
+      "writeShort"
     ]
   },
   {
@@ -1187,142 +1182,163 @@
   },
   {
     "args": [
-      "subOp",
-      "ctrl",
-      "worldX",
-      "worldY",
-      "identifier"
+      "slot",
+      "slot2",
+      "widgetId",
+      "widgetId2",
+      "itemId2",
+      "itemId"
     ],
-    "name": "OP_GROUND_ITEM_ACTION_0_SUBOP",
+    "name": "OP_WIDGET_DRAG",
     "reads": [
-      "readByteNeg",
+      "readShortAddLE",
+      "readShortAddLE",
+      "readIntME",
+      "readIntME",
+      "readShortLE",
+      "readShortAddLE"
+    ],
+    "packet": {
+      "length": 16,
+      "id": 83
+    },
+    "writes": [
+      "writeShortAddLE",
+      "writeShortAddLE",
+      "writeIntME",
+      "writeIntME",
+      "writeShortLE",
+      "writeShortAddLE"
+    ]
+  },
+  {
+    "args": [
+      "count"
+    ],
+    "name": "OP_RESUME_COUNTDIALOG",
+    "reads": [
+      "readInt"
+    ],
+    "packet": {
+      "length": 4,
+      "id": 46
+    },
+    "writes": [
+      "writeInt"
+    ]
+  },
+  {
+    "args": [],
+    "name": "OP_MOUSE_MOVEMENT",
+    "reads": [],
+    "packet": {
+      "length": -1,
+      "id": 53
+    },
+    "writes": []
+  },
+  {
+    "args": [
+      "length",
+      "var7"
+    ],
+    "name": "OP_RESUME_STRINGDIALOG",
+    "reads": [
       "readByte",
-      "readShortAdd",
-      "readShortAdd",
-      "readShortLE"
+      "readStringCp1252NullTerminated"
     ],
     "packet": {
-      "length": 8,
-      "id": 106
-    },
-    "writes": [
-      "writeByteNeg",
-      "writeByte",
-      "writeShortAdd",
-      "writeShortAdd",
-      "writeShortLE"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "identifier",
-      "worldX",
-      "subOp",
-      "worldY"
-    ],
-    "name": "OP_GROUND_ITEM_ACTION_1_SUBOP",
-    "reads": [
-      "readByte",
-      "readShort",
-      "readShortLE",
-      "readByteSub",
-      "readShort"
-    ],
-    "packet": {
-      "length": 8,
-      "id": 60
+      "length": -1,
+      "id": 58
     },
     "writes": [
       "writeByte",
-      "writeShort",
-      "writeShortLE",
-      "writeByteSub",
-      "writeShort"
+      "writeStringCp1252NullTerminated"
     ]
   },
   {
     "args": [
-      "subOp",
-      "worldX",
-      "worldY",
-      "ctrl",
-      "identifier"
+      "widgetId",
+      "childId",
+      "itemId",
+      "type"
     ],
-    "name": "OP_GROUND_ITEM_ACTION_2_SUBOP",
+    "name": "OP_WIDGET_ACTION",
     "reads": [
-      "readByteSub",
-      "readShortLE",
+      "readInt",
       "readShort",
-      "readByteNeg",
-      "readShort"
+      "readShort",
+      "readByte"
     ],
     "packet": {
-      "length": 8,
-      "id": 101
+      "length": 9,
+      "id": 104
     },
     "writes": [
-      "writeByteSub",
-      "writeShortLE",
+      "writeInt",
       "writeShort",
-      "writeByteNeg",
-      "writeShort"
+      "writeShort",
+      "writeByte"
     ]
   },
   {
     "args": [
-      "subOp",
-      "ctrl",
-      "worldY",
-      "identifier",
-      "worldX"
-    ],
-    "name": "OP_GROUND_ITEM_ACTION_3_SUBOP",
-    "reads": [
-      "readByteAdd",
-      "readByteAdd",
-      "readShortLE",
-      "readShortLE",
-      "readShortLE"
-    ],
-    "packet": {
-      "length": 8,
-      "id": 36
-    },
-    "writes": [
-      "writeByteAdd",
-      "writeByteAdd",
-      "writeShortLE",
-      "writeShortLE",
-      "writeShortLE"
-    ]
-  },
-  {
-    "args": [
-      "ctrl",
-      "worldY",
-      "worldX",
-      "identifier",
+      "widgetId",
+      "childId",
+      "itemId",
+      "type",
       "subOp"
     ],
-    "name": "OP_GROUND_ITEM_ACTION_4_SUBOP",
+    "name": "OP_WIDGET_ACTION_SUBOP",
     "reads": [
-      "readByteNeg",
-      "readShortLE",
-      "readShortLE",
+      "readInt",
       "readShort",
-      "readByteAdd"
+      "readShort",
+      "readByte",
+      "readByte"
     ],
     "packet": {
-      "length": 8,
-      "id": 43
+      "length": 10,
+      "id": 105
     },
     "writes": [
-      "writeByteNeg",
-      "writeShortLE",
-      "writeShortLE",
+      "writeInt",
       "writeShort",
-      "writeByteAdd"
+      "writeShort",
+      "writeByte",
+      "writeByte"
+    ]
+  },
+  {
+    "args": [
+      "id"
+    ],
+    "name": "OP_RESUME_OBJDIALOG",
+    "reads": [
+      "readShort"
+    ],
+    "packet": {
+      "length": 2,
+      "id": 52
+    },
+    "writes": [
+      "writeShort"
+    ]
+  },
+  {
+    "args": [
+      "heading"
+    ],
+    "name": "OP_EVENT_APPLET_FOCUS",
+    "reads": [
+      "readByte"
+    ],
+    "packet": {
+      "length": 1,
+      "id": 98
+    },
+    "writes": [
+      "writeByte"
     ]
   }
 ]

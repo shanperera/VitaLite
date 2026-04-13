@@ -115,7 +115,7 @@ public class PacketMapReader
                         out.append(entry.getArgs().get(i)).append("=").append(name).append(", ");
                         continue;
                     }
-                    if(entry.getName().startsWith("OP_GAME_OBJECT_ACTION_") && entry.getArgs().get(i).equals("identifier"))
+                    if((entry.getName().startsWith("OP_GAME_OBJECT_ACTION_") || entry.getName().equals("OP_WIDGET_TARGET_ON_GAME_OBJECT")) && entry.getArgs().get(i).equals("identifier"))
                     {
                         name = StaticIntFinder.find(ObjectID.class, (int) num);
                         out.append(entry.getArgs().get(i)).append("=").append(name).append(", ");
