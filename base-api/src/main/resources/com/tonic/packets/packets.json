@@ -1249,11 +1249,67 @@
     ],
     "packet": {
       "length": -1,
-      "id": 58
+      "id": 93
     },
     "writes": [
       "writeByte",
       "writeStringCp1252NullTerminated"
+    ]
+  },
+  {
+    "args": [
+      "18",
+      "ctrl",
+      "worldY",
+      "worldX",
+      "plane",
+      "flag",
+      "gameState",
+      "57",
+      "0",
+      "0",
+      "89",
+      "playerField1",
+      "playerField2",
+      "63"
+    ],
+    "name": "OP_MINIMAP_WALK",
+    "subOpcode": 18,
+    "reads": [
+      "readByte",
+      "readByte",
+      "readShortAddLE",
+      "readShortLE",
+      "readByte",
+      "readByte",
+      "readShort",
+      "readByte",
+      "readByte",
+      "readByte",
+      "readByte",
+      "readShort",
+      "readShort",
+      "readByte"
+    ],
+    "packet": {
+      "length": -1,
+      "id": 93
+    },
+    "writes": [
+      "writeByte",
+      "writeByte",
+      "writeShortAddLE",
+      "writeShortLE",
+      "writeByte",
+      "writeByte",
+      "writeShort",
+      "writeByte",
+      "writeByte",
+      "writeByte",
+      "writeByte",
+      "writeShort",
+      "writeShort",
+      "writeByte"
     ]
   },
   {
