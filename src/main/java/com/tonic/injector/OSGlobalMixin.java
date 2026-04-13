@@ -101,62 +101,42 @@ public class OSGlobalMixin
         }
     }
 
-    /**
-     * Injects setRandomDat call immediately after randomDat object creation.
-     * Matches: invokespecial SomeClass."&lt;init&gt;" followed by putstatic client.oc (randomDat)
-     */
     public static void randomDat(ClassNode clazz, MethodNode method)
     {
         JClass client = MappingProvider.getClass("Client");
         JField randomDat = MappingProvider.getField(client, "randomDat");
-        if(randomDat == null)
-        {
-            System.out.println("[RandomDat] WARNING: Could not find randomDat field mapping");
-            return;
-        }
-
-        List<FieldInsnNode> targets = new ArrayList<>();
-
+        AbstractInsnNode target = null;
         for(AbstractInsnNode insn : method.instructions)
         {
-            if(insn.getOpcode() != Opcodes.PUTSTATIC)
+            if (!(insn instanceof FieldInsnNode))
                 continue;
-
             FieldInsnNode fin = (FieldInsnNode) insn;
             if(!fin.owner.equals(randomDat.getOwnerObfuscatedName()) || !fin.name.equals(randomDat.getObfuscatedName()))
                 continue;
 
-            // Check if preceded by a constructor call (new uy/uw/etc <init>)
-            AbstractInsnNode prev = insn.getPrevious();
-            while(prev != null && prev.getOpcode() == -1)
-                prev = prev.getPrevious();
-
-            if(prev == null || prev.getOpcode() != Opcodes.INVOKESPECIAL)
-                continue;
-
-            MethodInsnNode ctor = (MethodInsnNode) prev;
-            if(!ctor.name.equals("<init>"))
-                continue;
-
-            targets.add(fin);
+            if(insn.getNext().getOpcode() != Opcodes.IFNULL)
+            {
+                if(insn.getPrevious().getOpcode() != Opcodes.ACONST_NULL || !(insn.getNext() instanceof JumpInsnNode))
+                    continue;
+                if(insn.getNext().getOpcode() == Opcodes.GOTO)
+                    continue;
+                target = insn;
+                break;
+            }
+            target = insn;
+            break;
         }
 
-        if(targets.isEmpty())
-            return;
-
-        boolean methodExists = clazz.methods.stream()
-                .anyMatch(m -> m.name.equals("setRandomDat") && m.desc.equals("(Ljava/lang/String;)V"));
-
-        for(FieldInsnNode target : targets)
+        if(target == null)
         {
-            System.out.println("[RandomDat] Injecting setRandomDat AFTER creation site in " + clazz.name + "." + method.name + method.desc
-                    + " (setRandomDat exists on class: " + methodExists + ")");
-
-            InsnList code = new InsnList();
-            code.add(new LdcInsnNode(clazz.name + "." + method.name + method.desc));
-            code.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "client", "setRandomDat", "(Ljava/lang/String;)V", false));
-
-            method.instructions.insert(target, code);
+            return;
         }
+
+        InsnList code = BytecodeBuilder.create()
+                .pushString(clazz.name + "." + method.name + method.desc)
+                .invokeStatic("client", "setRandomDat", "(Ljava/lang/String;)V")
+                .build();
+
+        method.instructions.insertBefore(target, code);
     }
 }

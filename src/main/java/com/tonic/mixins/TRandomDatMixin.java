@@ -7,7 +7,7 @@ import com.tonic.model.RandomDat;
 import com.tonic.util.ReflectBuilder;
 import net.runelite.api.Client;
 
-import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 @Mixin("Client")
 public abstract class TRandomDatMixin
@@ -19,71 +19,62 @@ public abstract class TRandomDatMixin
     public static String characterId;
 
     @Shadow("randomDat")
-    public static Object randomDat;
+    public static byte[] randomDat;
+
+//    @Insert(method = "randomDatData2", at = @At(value = AtTarget.RETURN, shift = Shift.HEAD), all = true)
+//    public static void onWriteNewRandomDatData(byte[] buffer, int var1) //writeRandomDat
+//    {
+//        if (!Static.getVitaConfig().shouldCacheRandomDat())
+//        {
+//            return;
+//        }
+//
+//        String username = ReflectBuilder.of(client)
+//                .method("getUsername", null, null)
+//                .get();
+//
+//        String identifier = username != null && !username.isEmpty() ? username : characterId;
+//
+//        byte[] newRandomDatData = Arrays.copyOf(buffer, 24);
+//        RandomDat.writeCachedRandomDatData(identifier, newRandomDatData);
+//        Logger.info("Storing cached random.dat data for user " + identifier);
+//    }
 
     @Inject
     public static void setRandomDat(String caller)
     {
-        System.out.println("[RandomDat] setRandomDat called from: " + caller);
+        if (!Static.getVitaConfig().shouldCacheRandomDat())
+        {
+            return;
+        }
+
         try
         {
-            if (Static.getVitaConfig() == null)
-            {
-                System.out.println("[RandomDat] VitaConfig not yet initialized, skipping");
-                return;
-            }
-
-            if (!Static.getVitaConfig().shouldCacheRandomDat())
-            {
-                System.out.println("[RandomDat] shouldCacheRandomDat is disabled, skipping");
-                return;
-            }
-
             String username = ReflectBuilder.of(client)
                     .method("getUsername", null, null)
                     .get();
 
             String identifier = username != null && !username.isEmpty() ? username : characterId;
-            System.out.println("[RandomDat] Identifier: " + identifier);
-
             byte[] data = RandomDat.getCachedRandomDatData(identifier);
-            int[] values = new int[8];
-
-            if (data != null && data.length >= 32)
+            if(data != null)
             {
-                ByteBuffer buf = ByteBuffer.wrap(data);
-                for (int i = 0; i < 8; i++)
-                {
-                    values[i] = buf.getInt();
-                }
+                randomDat = Arrays.copyOf(data, 24);
                 Logger.info("Using cached random.dat data for user " + identifier);
             }
             else
             {
-                for (int i = 0; i < 8; i++)
+                randomDat = new byte[24];
+                for(int i = 0; i < 24; i++)
                 {
-                    values[i] = -1;
+                    randomDat[i] = -1;
                 }
-                Logger.info("Spoofing random.dat with default values for user " + identifier);
             }
-
-            Object[] args = new Object[8];
-            for (int i = 0; i < 8; i++)
-            {
-                args[i] = values[i];
-            }
-
-            Class<?>[] paramTypes = new Class<?>[]{
-                    int.class, int.class, int.class, int.class,
-                    int.class, int.class, int.class, int.class
-            };
-            randomDat = ReflectBuilder.newInstance("uy", paramTypes, args).get();
-            Logger.info("random.dat override applied successfully");
         }
-        catch (Throwable ex)
+        catch (Exception ex)
         {
-            System.out.println("[RandomDat] Error from caller: " + caller + " - " + ex.getClass().getName() + ": " + ex.getMessage());
+            System.out.println("Issue from caller: " + caller);
             ex.printStackTrace();
+            System.exit(0);
         }
     }
 }
