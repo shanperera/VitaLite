@@ -55083,10 +55083,18 @@
         "isStatic": false
       },
       {
-        "name": "groundActions",
+        "name": "inventoryActions",
         "obfuscatedName": "ep",
         "ownerObfuscatedName": "nf",
         "descriptor": "[Ljava/lang/String;",
+        "isStatic": false,
+        "owner": "ItemComposition"
+      },
+      {
+        "name": "groundOps",
+        "obfuscatedName": "ev",
+        "ownerObfuscatedName": "nf",
+        "descriptor": "Loo;",
         "isStatic": false,
         "owner": "ItemComposition"
       },

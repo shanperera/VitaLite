@@ -159,20 +159,14 @@
     ]
   },
   {
-    "args": [
-      "heading"
-    ],
+    "args": ["heading"],
     "name": "OP_SET_HEADING",
-    "reads": [
-      "readByteSub"
-    ],
+    "reads": ["readByteSub"],
     "packet": {
       "length": 1,
       "id": 65
     },
-    "writes": [
-      "writeByteSub"
-    ]
+    "writes": ["writeByteSub"]
   },
   {
     "args": [
@@ -629,36 +623,24 @@
     ]
   },
   {
-    "args": [
-      "identifier"
-    ],
+    "args": ["identifier"],
     "name": "OP_EXAMINE_NPC",
-    "reads": [
-      "readShortLE"
-    ],
+    "reads": ["readShortLE"],
     "packet": {
       "length": 2,
       "id": 33
     },
-    "writes": [
-      "writeShortLE"
-    ]
+    "writes": ["writeShortLE"]
   },
   {
-    "args": [
-      "identifier"
-    ],
+    "args": ["identifier"],
     "name": "OP_EXAMINE_OBJECT",
-    "reads": [
-      "readShort"
-    ],
+    "reads": ["readShort"],
     "packet": {
       "length": 2,
       "id": 70
     },
-    "writes": [
-      "writeShort"
-    ]
+    "writes": ["writeShort"]
   },
   {
     "args": [
@@ -1212,20 +1194,14 @@
     ]
   },
   {
-    "args": [
-      "count"
-    ],
+    "args": ["count"],
     "name": "OP_RESUME_COUNTDIALOG",
-    "reads": [
-      "readInt"
-    ],
+    "reads": ["readInt"],
     "packet": {
       "length": 4,
       "id": 46
     },
-    "writes": [
-      "writeInt"
-    ]
+    "writes": ["writeInt"]
   },
   {
     "args": [],
@@ -1366,35 +1342,23 @@
     ]
   },
   {
-    "args": [
-      "id"
-    ],
+    "args": ["id"],
     "name": "OP_RESUME_OBJDIALOG",
-    "reads": [
-      "readShort"
-    ],
+    "reads": ["readShort"],
     "packet": {
       "length": 2,
       "id": 52
     },
-    "writes": [
-      "writeShort"
-    ]
+    "writes": ["writeShort"]
   },
   {
-    "args": [
-      "heading"
-    ],
+    "args": ["heading"],
     "name": "OP_EVENT_APPLET_FOCUS",
-    "reads": [
-      "readByte"
-    ],
+    "reads": ["readByte"],
     "packet": {
       "length": 1,
       "id": 98
     },
-    "writes": [
-      "writeByte"
-    ]
+    "writes": ["writeByte"]
   }
 ]
