@@ -9242,7 +9242,7 @@
       },
       {
         "name": "packedCallStack1",
-        "obfuscatedName": "gm",
+        "obfuscatedName": "xb",
         "ownerObfuscatedName": "client",
         "descriptor": "Ljava/lang/String;",
         "isStatic": true,
@@ -10659,7 +10659,7 @@
       },
       {
         "name": "packedCallStack2",
-        "obfuscatedName": "ws",
+        "obfuscatedName": "aa",
         "ownerObfuscatedName": "client",
         "descriptor": "Ljava/lang/String;",
         "isStatic": true,
@@ -13866,7 +13866,7 @@
         "isStatic": true
       },
       {
-        "obfuscatedName": "bm",
+        "obfuscatedName": "yx",
         "ownerObfuscatedName": "client",
         "descriptor": "(Ldo;IIIFLja;)V",
         "isStatic": true,
@@ -14532,7 +14532,7 @@
         "isStatic": true
       },
       {
-        "obfuscatedName": "xe",
+        "obfuscatedName": "vq",
         "ownerObfuscatedName": "client",
         "descriptor": "(I)V",
         "garbageValue": -1,
@@ -14626,7 +14626,7 @@
         "isStatic": true
       },
       {
-        "obfuscatedName": "td",
+        "obfuscatedName": "dw",
         "ownerObfuscatedName": "client",
         "descriptor": "()V",
         "isStatic": true,
@@ -14634,7 +14634,7 @@
         "owner": "Client"
       },
       {
-        "obfuscatedName": "tr",
+        "obfuscatedName": "vw",
         "ownerObfuscatedName": "client",
         "descriptor": "()V",
         "isStatic": true,
