@@ -14506,11 +14506,11 @@
         "isStatic": true
       },
       {
-        "obfuscatedName": "yp",
+        "obfuscatedName": "ip",
         "ownerObfuscatedName": "client",
-        "descriptor": "(I)V",
+        "descriptor": "(Ldi;I)Z",
         "garbageValue": -1,
-        "isStatic": true,
+        "isStatic": false,
         "name": "processServerPacket",
         "owner": "Client"
       },
@@ -17748,7 +17748,7 @@
       },
       {
         "name": "serverPacket",
-        "obfuscatedName": "ap",
+        "obfuscatedName": "ax",
         "ownerObfuscatedName": "di",
         "descriptor": "Ljt;",
         "isStatic": false,
@@ -41031,7 +41031,7 @@
         "isStatic": true
       },
       {
-        "name": "length",
+        "name": "id",
         "obfuscatedName": "em",
         "ownerObfuscatedName": "iq",
         "descriptor": "I",
@@ -41041,7 +41041,7 @@
         "owner": "ClientPacket"
       },
       {
-        "name": "id",
+        "name": "length",
         "obfuscatedName": "et",
         "ownerObfuscatedName": "iq",
         "descriptor": "I",
@@ -45088,7 +45088,7 @@
         "isStatic": true
       },
       {
-        "name": "id",
+        "name": "length",
         "obfuscatedName": "fg",
         "ownerObfuscatedName": "jt",
         "descriptor": "I",
@@ -45098,7 +45098,7 @@
         "owner": "ServerPacket"
       },
       {
-        "name": "length",
+        "name": "id",
         "obfuscatedName": "fr",
         "ownerObfuscatedName": "jt",
         "descriptor": "I",
@@ -55168,7 +55168,7 @@
         "isStatic": false
       },
       {
-        "name": "groundOps",
+        "name": "groundActions",
         "obfuscatedName": "ev",
         "ownerObfuscatedName": "nf",
         "descriptor": "Loo;",
