@@ -9,15 +9,15 @@ import net.runelite.api.EntityOps;
 @Mixin("ItemComposition")
 public abstract class TItemCompositionMixin implements TItemComposition
 {
-    @Shadow("groundOps")
-    public Object groundOps;
+    @Shadow("groundActions")
+    public Object groundActions;
 
     public String[] getGroundActions()
     {
-        if (groundOps == null)
+        if (groundActions == null)
             return new String[0];
 
-        EntityOps ops = (EntityOps) groundOps;
+        EntityOps ops = (EntityOps) groundActions;
         String[] result = new String[EntityOps.MAX_OPS];
         for (int i = 0; i < EntityOps.MAX_OPS; i++)
         {
